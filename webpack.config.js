@@ -3,9 +3,9 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
-  output: {    
-    filename: 'main.js',    
-    path: path.resolve(__dirname, 'dist')
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -15,9 +15,9 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
         test: /\.css?$/,
