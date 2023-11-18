@@ -1,11 +1,14 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import MainPage from './pages/main';
+import LoginPage from './pages/login';
 
 function App() {
   return (
-    <div>
-      <h2 className='text-blue-500 text-xl font-bold'>Hello, React!</h2>
-      <p className='text-lg font-medium'>Hello, Typescript!</p>
-    </div>
+    <Routes>
+      <Route path='/' element={<MainPage />} />
+      <Route path='/login' element={<LoginPage />} />
+    </Routes>
   );
 }
 
