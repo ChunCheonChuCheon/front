@@ -4,10 +4,9 @@ import React from 'react';
 
 function DefaultLayout({ children }) {
   return (
-    <div class='w-screen bg-gradient-to-r from-[#DBFFEE] to-[#E2D9FF]'>
-      <div>Hello</div>
+    <div class='w-screen h-screen grid place-items-center bg-gradient-to-r from-[#DBFFEE] to-[#E2D9FF]'>
       {/* <Header /> 헤더 필요시 해제*/}
-      <div>{children}</div>
+      {children}
       {/* <Footer /> 푸터 필요시 해제*/}
     </div>
   );
