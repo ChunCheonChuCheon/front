@@ -22,6 +22,7 @@ export default function Login() {
       if (response.ok) {
         const result = await response.json();
         console.log(result); // 처리 결과를 콘솔에 출력하거나 다른 작업 수행
+        
       } else {
         console.error('API 호출 실패');
       }
