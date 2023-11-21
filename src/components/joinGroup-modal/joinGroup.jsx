@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form';
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
-
+import { useNavigate } from 'react-router-dom';
 export default function JoinGroup() {
     const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
+
 
     const onSubmit = async (data) => {
         
@@ -24,7 +26,7 @@ export default function JoinGroup() {
                 <form class='flex flex-col mt-5' onSubmit={handleSubmit(onSubmit)}>
                     <input
                         {...register('pinNumber', { required: true })}
-                        class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#E2D9FF] p-2'
+                        class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
                         type='text'
                         placeholder='핀 번호'
                     />
@@ -41,15 +43,15 @@ export default function JoinGroup() {
                 <TextNormal>아니면..</TextNormal>
                 < div class='border-b-2 border-[#000000] w-2/5  ml-2'></div>
             </div>
-                <form class='flex flex-col mt-5'>
+                <div class='flex flex-col mt-5'>
                    
                     <button
                         class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg  p-2 text-white font-bold'
-                        type='submit'
+                        onClick={() => { navigate('/new') }}
                     >
                         <TextBold>새로운 그룹 만들기</TextBold>
                     </button>
-                </form>
+                </div>
 
 
         </div>
