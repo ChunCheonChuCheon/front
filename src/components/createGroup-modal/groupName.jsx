@@ -26,11 +26,14 @@ export default function GroupName(props) {
           placeholder='그룹 이름'
         />
         <button
-          class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white font-bold'
-          onClick={()=>{props.handleStep(1)}}
+          class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
+          onClick={()=>{
+            props.handleStep(1)
+          }}
         >
-          다음
+         <TextNormal>다음</TextNormal>
         </button>
+    
       </div>     
       
     </WhiteBox>

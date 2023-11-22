@@ -10,30 +10,37 @@ import { useNavigate } from 'react-router-dom';
 
 export default function CreateGroupPage() {
   const navigate = useNavigate();
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit, setValue} = useForm();
 
-  const onSubmit = async (data) => {
-   
+  const onSubmit =async (data) => {
+    console.log(data);
   };
 
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleStep = (step) => {
       if(currentStep===1 && step===-1) navigate('/main?isModalOpen=false');
+      else if(currentStep===4 && step===1){
+       handleSubmit(onSubmit)();
+       console.log('submit');
+
+      }
       setCurrentStep(currentStep + step);
   };
+
+
   const renderCurrentStepModal = () => {
     switch (currentStep) {
       case 1:
-        return <GroupName handleStep={handleStep} register={register}/>;
+        return <GroupName handleStep={handleStep} register={register} />;
       case 2:
-        return <Location handleStep={handleStep} register={register}/>;
+        return <Location handleStep={handleStep} register={register} setValue={setValue}/>;
       case 3:
-        return <Time handleStep={handleStep} register={register}/>;
+        return <Time handleStep={handleStep} register={register} setValue={setValue}/>;
       case 4:
-        return <Range handleStep={handleStep} register={register}/>;
+        return <Range handleStep={handleStep} register={register} setValue={setValue}/>;
       default:
-        return null;
+        return 
     }
   };
 

@@ -14,14 +14,12 @@ export default function JoinGroupPage() {
         const searchParams = new URLSearchParams(location.search);
         const isModalOpenParam = searchParams.get('isModalOpen');
 
-        // Check if the query parameter is present and set the state accordingly
         if (isModalOpenParam === 'false') {
             setPersonalNameModalOpen(false);
         }
     }, [location.search]);
 
     const handleCloseModal = () => {
-        console.log('close');
         setPersonalNameModalOpen(false);
     };
 

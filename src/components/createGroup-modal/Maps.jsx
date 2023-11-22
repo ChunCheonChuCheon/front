@@ -1,83 +1,44 @@
-import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
 
-const Maps = () => {
-    const [location, setLocation] = useState([37.86877,127.73804]);
-
-
-    function DraggableMarker() {
-        const [draggable, setDraggable] = useState(false);
-        const [position, setPosition] = useState([37.86877,127.73804]);
-        const markerRef = useRef(null);
-
-        const eventHandlers = useMemo(
-            () => ({
-                dragend() {
-                    const marker = markerRef.current;
-                    if (marker != null) {
-                        setPosition(marker.getLatLng());
-                    }
-                },
-            }),
-            []
-        );
-
-        const toggleDraggable = useCallback(() => {
-            setDraggable((d) => !d);
-        }, []);
-
-        return (
-            <Marker draggable={true} eventHandlers={eventHandlers} position={position} ref={markerRef}>
-                <Popup minWidth={90}>
-                    <span onClick={toggleDraggable}>
-                        {draggable ? '마커를 드래그할 수 있습니다.' : '마커를 드래그하려면 클릭하세요.'}
-                    </span>
-                </Popup>
-            </Marker>
-        );
-    }
+const Maps = (props) => {
+    const mapRef = React.useRef(null);
+    const [location, setLocation] = useState(props.location);
+    
 
 
-
-    //위치정보 받아오기(한번만 실행)
-    useEffect(() => {
-        const getLocation = () => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        const { latitude, longitude } = position.coords;
-                        setLocation([latitude, longitude]);
-                        console.log(latitude, longitude);
-                    },
-                    (error) => {
-                        console.error('Error getting geolocation:', error);
-                    }
-                );
-            } else {
-                console.error('Geolocation is not supported by this browser.');
-            }
-        };
-        getLocation();
-    }, []);
-
-
+    // 지도 드래그 이벤트 핸들러
+    const handleDrag = () => {
+        if (mapRef.current) {
+            const newLocation = mapRef.current.getCenter();
+            setLocation([newLocation.lat, newLocation.lng]);
+           
+        }
+    };
 
     return (
         <div>
-            
-
-            {/* 왜 location값이 바꼇는데 렌더링이 안되는거지? */}
-            <MapContainer center={location} style={{ height: '20rem' }} zoom={20} scrollWheelZoom={false} >
+            <MapContainer
+                center={props.location}
+                style={{ height: '20rem' }}
+                zoom={20}
+                scrollWheelZoom={false}
+                whenReady={(map) => {
+                    map.target.on('drag', handleDrag);
+                    mapRef.current = map.target;
+                }}
+            >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <DraggableMarker />
+                {/* 가운데에 고정된 마커 추가 */}
+                <Marker position={location} draggable={true}>
+                    {/* Popup은 선택사항입니다. 필요하면 추가하십시오. */}
+                </Marker>
             </MapContainer>
         </div>
-
     );
-
 };
 
 export default Maps;
