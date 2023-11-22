@@ -23,7 +23,7 @@ export default function PersonalName(props){
       <form class='flex flex-col mt-5' onSubmit={handleSubmit(onSubmit)}>
         <input
          {...register('personalName', { required: true})}
-          class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#E2D9FF] p-2'
+          class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='text'
           placeholder='닉네임'
         />
