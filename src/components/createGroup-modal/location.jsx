@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import Maps from './Maps';
+import Map from './Map';
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
@@ -23,7 +23,7 @@ export default function Location(props) {
         }
     };
     getLocation();
-}, []);
+},[]);
 
 
 
@@ -38,7 +38,7 @@ export default function Location(props) {
       <TextBold>
         <div class='mb-7'>모임 장소 정하기</div>
       </TextBold>
-      <Maps location={userlocation} />
+      <Map location={userlocation} setLocation={setUserLocation}/>
 
       <button
           class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
