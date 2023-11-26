@@ -14,6 +14,9 @@ export default function CreateGroupPage() {
 
   const onSubmit =async (data) => {
     console.log(data);
+    
+    
+    navigate('/group');
   };
 
   const [currentStep, setCurrentStep] = useState(1);

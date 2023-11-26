@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import React, { useEffect, useState } from 'react';
 
-const Maps = (props) => {
+const Map = (props) => {
     const mapRef = React.useRef(null);
     const [location, setLocation] = useState(props.location);
     
@@ -16,11 +16,13 @@ const Maps = (props) => {
         }
     };
 
+    useEffect(() => {props.setLocation(location)}, [location]);
+
     return (
         <div>
             <MapContainer
                 center={props.location}
-                style={{ height: '20rem' }}
+                style={{ height:'40vh'}}
                 zoom={20}
                 scrollWheelZoom={false}
                 whenReady={(map) => {
@@ -41,4 +43,4 @@ const Maps = (props) => {
     );
 };
 
-export default Maps;
+export default Map;
