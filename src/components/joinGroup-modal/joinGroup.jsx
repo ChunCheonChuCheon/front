@@ -17,7 +17,7 @@ export default function JoinGroup() {
 
     return (
         <div>
-            <WhiteBox>
+            <WhiteBox class='w-full'>
                 <TextBold>
                     <div class='mb-7'>그룹 참가하기</div>
                 </TextBold>

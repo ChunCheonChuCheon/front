@@ -4,7 +4,9 @@ import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import Map from './Map';
+import { useNavigate } from 'react-router-dom';
 export default function Group() {
+    const navigate = useNavigate();
 
 
     const WhiteBox2 = ({ children }) =>
@@ -22,9 +24,8 @@ export default function Group() {
 
     const [recommendedMenu, setRecommendedMenu] = useState([
         { name: '제육볶음', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMjZfMjgy%2FMDAxNjY5NDUwODU1OTE3.YzDUwXDD1N2Wc1fSeM3Nts6woN5X1YjJLMPLNLPd_Isg.Ntyvi7XW-X7KWGjwkyy7hpIKXVELf7TZSaP2LyNpNVgg.JPEG.love8672312%2F20221125%25A3%25DF123939.jpg&type=sc960_832' },
-        { name: '', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-        { name: 'Menu3', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMTZfMjEw%2FMDAxNjk3NDE2Mzk5MzMx.enPFoRT3tcgXZmRUGWH8DNjxClOXlANZDWkkd1NOp24g.V0nPvgJE1FOuPbvhl0GYzqhUYvMVT2iFguI614ViZEcg.JPEG.rlashfeld%2FKakaoTalk_20231016_090850110_07.jpg&type=sc960_832' },
-        { name: '', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
+        { name: '삼겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
+        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
 
     ]);
 
@@ -58,6 +59,8 @@ export default function Group() {
 
     );
 
+
+  
 
     return (
         <div class='w-4/5 max-w-[400px]  '>
@@ -101,7 +104,8 @@ export default function Group() {
                         </TextBold>
                         <div class='flex flex-wrap  items-center border-2 border-solid border-blue-500'>
                             {menuList}
-                            <button class="w-20 h-20 m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray"><TextBold>+</TextBold></button>
+                            <button class="w-20 h-20 m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray" 
+                                onClick={()=>{navigate('/menu', { state: { recommendedMenu } });}}><TextBold>+</TextBold></button>
                         </div>
 
                     </div>
@@ -121,8 +125,9 @@ export default function Group() {
                 {restaurantList}
             </div>
         </div>
+  );
 
-    )
+    
 }
 
 

@@ -3,25 +3,30 @@ import { useForm } from 'react-hook-form';
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAuthToken } from '../../redux/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const baseURL = useSelector((state) => state.baseURL);
+
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('{{baseURL}}/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: data.id,
-          password: data.password,
-        }),
+        console.log(baseURL);
+      const response = await axios.post(`${baseURL}/auth/login`, {
+        id: data.id,
+        password: data.password,
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result); // 처리 결과를 콘솔에 출력하거나 다른 작업 수행
+      if (response.status === 200) {
+        const result = response.data;
+        console.log(result);
+        dispatch(setAuthToken(result.token));
+        navigate('/main');
         
       } else {
         console.error('API 호출 실패');
