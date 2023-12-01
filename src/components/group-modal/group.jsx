@@ -10,7 +10,7 @@ export default function Group() {
 
 
     const WhiteBox2 = ({ children }) =>
-        <div class='w-full h-full p-5 bg-white rounded-xl shadow-xl flex flex-col '>
+        <div class='w-full h-full py-5 px-2.5 bg-white rounded-xl shadow-xl flex flex-col '>
             {children}
         </div>
 
@@ -26,12 +26,15 @@ export default function Group() {
         { name: '제육볶음', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMjZfMjgy%2FMDAxNjY5NDUwODU1OTE3.YzDUwXDD1N2Wc1fSeM3Nts6woN5X1YjJLMPLNLPd_Isg.Ntyvi7XW-X7KWGjwkyy7hpIKXVELf7TZSaP2LyNpNVgg.JPEG.love8672312%2F20221125%25A3%25DF123939.jpg&type=sc960_832' },
         { name: '삼겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
         { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
+        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
+        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
+        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
 
     ]);
 
 
     const menuList = recommendedMenu.map((menu) =>
-        <img src={menu.img} class="w-20 h-20 m-1 rounded-xl shadow-xl border-2 border-solid border-black"></img>
+        <img src={menu.img} style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} class=" m-1 rounded-xl shadow-xl border-2 border-solid border-black"></img>
     );
 
 
@@ -48,10 +51,12 @@ export default function Group() {
                 <TextBold><div class='mb-4'>{restaurant.name}</div></TextBold>
                 <div class="grid grid-cols-5 gap-4    ">
                     <div class="col-span-2 ...">
-                        <img src={restaurant.img} class="w-full h-[17vh] rounded-xl shadow-xl border-2 border-solid border-gray"></img>
+                        <img src={restaurant.img}
+                         style={{ maxWidth:'120px', maxHeight:'120px', width: '25vw', height: '14vh' }}
+                          class=" rounded-xl shadow-xl border-2 border-solid border-gray"></img>
                     </div>
                     <div class="  col-span-3 h-4/5 w-full...">
-                        <Map location={restaurant.location} height='17vh'></Map>
+                        <Map location={restaurant.location} height='14vh'></Map>
                     </div>
                 </div>
             </WhiteBox2>
@@ -63,24 +68,26 @@ export default function Group() {
   
 
     return (
-        <div class='w-4/5 max-w-[400px]  '>
+        <div class='mt-5 w-4/5 max-w-[400px]  '>
             <div class="grid grid-cols-3  gap-4  ">
                 <div class="row-span-2 col-span-2 ... ">
                     <WhiteBox2>
                         <TextBold>
-                            <div class='mb-4'>모임 장소</div>
+                            <div class='mb-4 '>모임 장소</div>
                         </TextBold>
 
-                        <Map location={groupInfo.location} height='25vh'></Map>
+                        <Map location={groupInfo.location} height='23vh'></Map>
                     </WhiteBox2></div>
-                <div class=" ...">
+                <div class="row-span-1 col-span-1 ...">
                     <WhiteBox2>
+                        <div class='item-center'>
                         <TextBold>
-                            <div class='mb-3'>모임 일시</div>
+                            <div class='mb-4 '>모임 일시</div>
                         </TextBold>
                         <TextNormal>
                             <div>{groupInfo.time}</div>
                         </TextNormal>
+                        </div>
                     </WhiteBox2></div>
                 <div class="...">
                     <WhiteBox2>
@@ -102,10 +109,11 @@ export default function Group() {
                         <TextBold>
                             <div class='mb-3'>그룹 추천 메뉴</div>
                         </TextBold>
-                        <div class='flex flex-wrap  items-center border-2 border-solid border-blue-500'>
+                        <div class='flex flex-wrap  items-center '>
                             {menuList}
-                            <button class="w-20 h-20 m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray" 
-                                onClick={()=>{navigate('/menu', { state: { recommendedMenu } });}}><TextBold>+</TextBold></button>
+                             <button style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} 
+                            class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray" 
+                                onClick={()=>{navigate('/menu', { state: { recommendedMenu } });}}><TextBold>+</TextBold></button> 
                         </div>
 
                     </div>

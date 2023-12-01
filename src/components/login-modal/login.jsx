@@ -22,7 +22,7 @@ export default function Login() {
         password: data.password,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         const result = response.data;
         console.log(result);
         dispatch(setAuthToken(result.token));
@@ -30,9 +30,12 @@ export default function Login() {
         
       } else {
         console.error('API 호출 실패');
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+
       }
     } catch (error) {
       console.error('API 호출 중 오류:', error);
+      alert('서버에 접속이 되지 않습니다.');
     }
   };
 
@@ -46,7 +49,7 @@ export default function Login() {
       <form class='flex flex-col mt-5' onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register('id', { required: true, maxLength: 20 })}
-          class='border-b-2 border-[#E2D9FF] focus:outline-none focus:border-[#E2D9FF] p-2'
+          class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='text'
           placeholder='아이디'
         />
@@ -56,12 +59,12 @@ export default function Login() {
             maxLength: 20,
             pattern: /^[A-Za-z0-9]+$/i,
           })}
-          class='border-b-2 border-[#E2D9FF] focus:outline-none focus:border-[#E2D9FF] p-2'
+          class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='password'
           placeholder='비밀번호'
         />
         <button
-          class='bg-[#E2D9FF] hover:bg-[#866dd8] rounded-lg mt-5 p-2 text-white font-bold'
+          class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white font-bold'
           type='submit'
         >
           로그인

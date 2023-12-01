@@ -1,4 +1,4 @@
-const initialState = 'https://localhost:3000';
+const initialState = 'http://3.37.88.24';
   
 const baseUrlReducer = (state=initialState, action) => {
     switch (action.type) {

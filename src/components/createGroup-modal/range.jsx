@@ -12,11 +12,11 @@ export default function Range(props) {
 
   const getDescription = () => {
     switch (selectedOption) {
-      case 'near':
+      case 3:
         return '도보로 이동할 수 있는 3km 범위의 식당을 추천합니다.';
-      case 'far':
+      case 6:
         return '차량으로 이동할 수 있는 6km 범위의 식당을 추천합니다.';
-      case 'all':
+      case -1:
         return '춘천 전 지역을 추천합니다.';
       default:
         return '탐색범위를 선택해주세요.';
@@ -35,20 +35,20 @@ export default function Range(props) {
         <div className='mb-7'>탐색범위 정하기</div>
         <div className='flex justify-between items-center'>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === 'near' ? ' bg-blue-500 text-white' : ''}`}
-            onClick={() => handleOptionClick('near')}
+            className={`flex flex-col rounded-lg p-2 ${selectedOption === 3 ? ' bg-blue-500 text-white' : ''}`}
+            onClick={() => handleOptionClick(3)}
           >
             가깝게
           </button>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === 'far' ? 'bg-blue-500 text-white' : ''}`}
-            onClick={() => handleOptionClick('far')}
+            className={`flex flex-col rounded-lg p-2 ${selectedOption === 6 ? 'bg-blue-500 text-white' : ''}`}
+            onClick={() => handleOptionClick(6)}
           >
             멀게
           </button>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === 'all' ? 'bg-blue-500 text-white' : ''}`}
-            onClick={() => handleOptionClick('all')}
+            className={`flex flex-col rounded-lg p-2 ${selectedOption === -1 ? 'bg-blue-500 text-white' : ''}`}
+            onClick={() => handleOptionClick(-1)}
           >
             전체
           </button>

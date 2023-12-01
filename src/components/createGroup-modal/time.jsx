@@ -71,7 +71,7 @@ export default function Time(props) {
         className='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
         onClick={() => { 
           const combinedDateTime = combineDateAndTime(selectedDate, selectedTime);
-          props.setValue('time', combinedDateTime);
+          props.setValue('time', `${combinedDateTime.getFullYear()}-${(combinedDateTime.getMonth() + 1).toString().padStart(2, '0')}-${combinedDateTime.getDate().toString().padStart(2, '0')} ${combinedDateTime.getHours().toString().padStart(2, '0')}:${combinedDateTime.getMinutes().toString().padStart(2, '0')}:${combinedDateTime.getSeconds().toString().padStart(2, '0')}`);
           props.handleStep(1);
         }}
       ><TextNormal>다음</TextNormal>

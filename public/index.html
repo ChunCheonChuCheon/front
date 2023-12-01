@@ -5,6 +5,7 @@
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""/>
 
+  
 <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
@@ -18,8 +19,21 @@
       content="Web site created using create-react-app"
     />
     <title>춘천추천</title>
+    <style>
+      body {
+        font-size: 3vw; /* 기본 글꼴 크기는 화면 너비의 2% */
+      }
+  
+      @media screen and (min-width: 500px) {
+        body {
+          font-size: 16px; /* 예시로 12px를 최대 크기로 지정 */
+        }
+      }
+  
+
+    </style>
   </head>
-  <body class="bg-gradient-to-r from-[#dbecff] to-[#e2d9ff]">
+  <body  class="bg-gradient-to-r from-[#dbecff] to-[#e2d9ff]">
     <div id="root" ></div>
   </body>
 </html>
