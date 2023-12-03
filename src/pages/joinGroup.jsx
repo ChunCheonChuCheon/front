@@ -25,9 +25,11 @@ export default function JoinGroupPage() {
 
 
     return (
-        <DefaultLayout>
-            {isPersonalNameModalOpen && <PersonalName onClose={handleCloseModal} />}
-            {!isPersonalNameModalOpen && <JoinGroup/>}
+        <DefaultLayout> 
+            {/* 닉네임 설정 기능 꺼둠 */}
+            {/* {isPersonalNameModalOpen && <PersonalName onClose={handleCloseModal} />}
+            {!isPersonalNameModalOpen && <JoinGroup/>} */}
+            <JoinGroup/>
         </DefaultLayout>
     );
 }

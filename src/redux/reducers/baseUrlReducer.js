@@ -1,4 +1,4 @@
-const initialState = 'http://3.37.88.24';
+const initialState = 'http://43.203.29.5';
   
 const baseUrlReducer = (state=initialState, action) => {
     switch (action.type) {

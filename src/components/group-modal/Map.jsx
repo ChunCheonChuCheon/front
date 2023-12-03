@@ -6,7 +6,7 @@ const Map = (props) => {
     const [location, setLocation] = useState(props.location);
 
 
-
+    
     
 
     return (

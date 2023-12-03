@@ -9,7 +9,7 @@ export default function JoinGroup() {
 
 
     const onSubmit = async (data) => {
-        
+        navigate(`/group/${data.pinNumber}`);
     };
 
     const JoinGroupWhiteBox = ({ children }) => {

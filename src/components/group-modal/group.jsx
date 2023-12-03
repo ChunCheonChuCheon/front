@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import Map from './Map';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import Graph from './graph';
+import { set } from 'react-hook-form';
+
 export default function Group() {
     const navigate = useNavigate();
-
+    const baseURL = useSelector((state) => state.baseURL);
+    const token = useSelector((state) => state.auth);
+    const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>
         <div class='w-full h-full py-5 px-2.5 bg-white rounded-xl shadow-xl flex flex-col '>
@@ -18,46 +25,204 @@ export default function Group() {
     const [groupInfo, setGroupInfo] = useState({
         name: '',
         location: [37.86877, 127.73804],
-        time: '11월 21일 13:00',
+        date: '11월 21일 13:00',
         range: '가깝게',
     });
 
-    const [recommendedMenu, setRecommendedMenu] = useState([
-        { name: '제육볶음', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMjZfMjgy%2FMDAxNjY5NDUwODU1OTE3.YzDUwXDD1N2Wc1fSeM3Nts6woN5X1YjJLMPLNLPd_Isg.Ntyvi7XW-X7KWGjwkyy7hpIKXVELf7TZSaP2LyNpNVgg.JPEG.love8672312%2F20221125%25A3%25DF123939.jpg&type=sc960_832' },
-        { name: '삼겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-        { name: '오겹살', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjhfNTUg%2FMDAxNjk4NDk2MTQ5MjMx.CKGJoA-Uu3m1tMlJtThT07m0DSM-DaJsw6YyCxIVH7Qg.CCENK-VzMOSqmf8bOq9Bmiu1c5cvBo7bwN7rPLoSIz4g.JPEG.grideoox%2F2_2.jpg&type=sc960_832' },
-
-    ]);
-
-
-    const menuList = recommendedMenu.map((menu) =>
-        <img src={menu.img} style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} class=" m-1 rounded-xl shadow-xl border-2 border-solid border-black"></img>
-    );
-
+    const [surveyInfo, setSurveyInfo] = useState({
+        "top3Category": [
+            {
+                "category": "족발/보쌈",
+                "score": 0
+            },
+            {
+                "category": "돈까스",
+                "score": 0
+            },
+            {
+                "category": "회",
+                "score": 0
+            }
+        ],
+        "groupSize": 2,
+        "noResponseNumber": 5
+    });
 
     const [recommendedRestaurant, setRecommendedRestaurant] = useState([
-        { name: '식당1', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMjZfMjgy%2FMDAxNjY5NDUwODU1OTE3.YzDUwXDD1N2Wc1fSeM3Nts6woN5X1YjJLMPLNLPd_Isg.Ntyvi7XW-X7KWGjwkyy7hpIKXVELf7TZSaP2LyNpNVgg.JPEG.love8672312%2F20221125%25A3%25DF123939.jpg&type=sc960_832', location: [37.86877, 127.73804] },
-        { name: '식당2', img: 'restaurant2.jpg', location: [37.86877, 127.73804] },
-        { name: '식당3', img: 'restaurant3.jpg', location: [37.86877, 127.73804] },
-
+        {
+            "id": 5,
+            "name": "맘스터치 강대효자점",
+            "img": "temp",
+            "locationX": "37.8729267",
+            "locationY": "127.7457318",
+            "openTime": "10:00",
+            "closeTime": "18:00",
+            "address": "강원특별자치도 춘천시 서부대성로 247 2층 (우)24287",
+            "category": "버거"
+        },
     ]);
 
+
+    const formatDate = (isoDateTime) => {
+        const [datePart, timePart] = isoDateTime.split('T');
+        const [year, month, day] = datePart.split('-');
+        const [hour, minute] = timePart.replace(/\.\d+Z$/, '').split(':');
+
+        return `${month}월 ${day}일 ${hour}:${minute}`;
+    };
+
+    function formatRange(value) {
+        if (value === 3) {
+            return "가깝게";
+        } else if (value === 6) {
+            return "멀리";
+        } else if (value === -1) {
+            return "전체";
+        } else {
+            // 예외 처리: 3, 6, -1 이외의 값이 들어올 경우
+            return "알 수 없음";
+        }
+    }
+
+    async function getGroupInfo() {
+        try {
+
+            const response = await axios.get(`${baseURL}/group?pin=${pin}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                const result = response.data;
+                console.log('getGroupInfo: ', result);
+                setGroupInfo({
+                    name: result.name,
+                    location: [result.locationX, result.locationY],
+                    date: formatDate(result.date),
+                    range: formatRange(result.range),
+                });
+
+            } else {
+                console.error('API 호출 실패');
+            }
+        } catch (error) {
+            console.error('API 호출 중 오류(getGroupInfo):', error);
+        }
+    }
+
+    async function getSurveyInfo() {
+        try {
+
+            const response = await axios.get(`${baseURL}/group/survey?pin=${pin}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                
+                const result = response.data;
+                console.log('getSurveyInfo: ', result);
+                setSurveyInfo({
+                    "top3Category": result.top3Category,
+                    "groupSize": result.groupSize,
+                    "noResponseNumber": result.noResponseNumber,
+                });
+
+            } else {
+                console.error('API 호출 실패');
+            }
+        } catch (error) {
+            console.error('API 호출 중 오류(getSurveyInfo):', error);
+
+        }
+    }
+
+    async function getRecommendedRestaurant() {
+        try {
+            const response = await axios.get(`${baseURL}/group/recommendation?pin=${pin}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+    
+            if (response.status === 200) {
+                const result = response.data;
+                console.log('getRecommendedRestaurant: ', result);
+    
+                const recommendedRestaurantsPromises = result.recommendation.map(async (restaurant) => {
+                    try {
+                        const response2 = await axios.get(`${baseURL}/restaurant?id=${restaurant.id}`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                            },
+                        });
+                        if (response2.status === 200) {
+                            const result2 = response2.data;
+                            return {
+                                id: restaurant.id,
+                                distance: restaurant.distance,
+                                name: result2.name,
+                                img: result2.img,
+                                locationX: result2.locationX,
+                                locationY: result2.locationY,
+                                openTime: result2.openTime,
+                                closeTime: result2.closeTime,
+                                address: result2.address,
+                                category: result2.category,
+                            };
+                        }
+                    } catch (error) {
+                        console.error('API 호출 중 오류(getRestaurant):', error);
+                    }
+                });
+    
+                const recommendedRestaurants = await Promise.all(recommendedRestaurantsPromises);
+    
+                setRecommendedRestaurant(recommendedRestaurants);
+            } else {
+                console.error('API 호출 실패');
+            }
+        } catch (error) {
+            console.error('API 호출 중 오류:', error);
+        }
+    }
+    
+    useEffect(() => {
+        console.log('token',token);
+        getGroupInfo();
+        getSurveyInfo();
+        getRecommendedRestaurant();
+    }, []);
+
+
+    // const menuList = recommendedMenu.map((menu) =>
+    //     <img src={menu.img} style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} class=" m-1 rounded-xl shadow-xl border-2 border-solid border-black"></img>
+    // );
+
+
+
+
+
     const restaurantList = recommendedRestaurant.map((restaurant) =>
-        <div class='mb-5 border border-solid border-black'>
+        <div class='mb-5 '>
             <WhiteBox2>
                 <TextBold><div class='mb-4'>{restaurant.name}</div></TextBold>
                 <div class="grid grid-cols-5 gap-4    ">
                     <div class="col-span-2 ...">
                         <img src={restaurant.img}
-                         style={{ maxWidth:'120px', maxHeight:'120px', width: '25vw', height: '14vh' }}
-                          class=" rounded-xl shadow-xl border-2 border-solid border-gray"></img>
+                            style={{ maxWidth: '140px', maxHeight: '140px', width: '25vw', height: '16vh' }}
+                            class=" rounded-xl shadow-xl border-2 border-solid border-gray"></img>
                     </div>
                     <div class="  col-span-3 h-4/5 w-full...">
-                        <Map location={restaurant.location} height='14vh'></Map>
+                        <Map location={[restaurant.locationX,restaurant.locationY]} height='16vh'></Map>
                     </div>
+                    <div class="col-span-2 ...">
+                        <TextNormal><div class='mb-4 text-center'>#{restaurant.category}</div></TextNormal>
+                    </div>
+                    <div class="  col-span-3 ...">
+                        <TextNormal><div class='mb-4'>{restaurant.address}</div></TextNormal>
+                    </div>
+
                 </div>
             </WhiteBox2>
         </div>
@@ -65,10 +230,22 @@ export default function Group() {
     );
 
 
-  
+
 
     return (
-        <div class='mt-5 w-4/5 max-w-[400px]  '>
+        <div class=' w-4/5 max-w-[400px]  '>
+            {/* 오른쪽에 붙어있는 groupInfo.name */}
+            <div class='flex justify-center  items-center '>
+                <TextBold>
+                    <div class=' my-3 border border-solid border-red-500'>{groupInfo.name}</div>
+                </TextBold>
+            </div>
+            <button onClick={()=>{
+                getGroupInfo();
+                getSurveyInfo();
+                getRecommendedRestaurant();
+            }}>새로고침</button>
+
             <div class="grid grid-cols-3  gap-4  ">
                 <div class="row-span-2 col-span-2 ... ">
                     <WhiteBox2>
@@ -81,12 +258,12 @@ export default function Group() {
                 <div class="row-span-1 col-span-1 ...">
                     <WhiteBox2>
                         <div class='item-center'>
-                        <TextBold>
-                            <div class='mb-4 '>모임 일시</div>
-                        </TextBold>
-                        <TextNormal>
-                            <div>{groupInfo.time}</div>
-                        </TextNormal>
+                            <TextBold>
+                                <div class='mb-4 '>모임 일시</div>
+                            </TextBold>
+                            <TextNormal>
+                                <div>{groupInfo.date}</div>
+                            </TextNormal>
                         </div>
                     </WhiteBox2></div>
                 <div class="...">
@@ -107,13 +284,20 @@ export default function Group() {
                     <div class='flex flex-col'>
 
                         <TextBold>
-                            <div class='mb-3'>그룹 추천 메뉴</div>
+                            <div class='mb-3'>선호 음식 카테고리</div>
                         </TextBold>
-                        <div class='flex flex-wrap  items-center '>
-                            {menuList}
-                             <button style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} 
-                            class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray" 
-                                onClick={()=>{navigate('/menu', { state: { recommendedMenu } });}}><TextBold>+</TextBold></button> 
+                        <div class='flex justify-center  items-center '>
+
+
+                            {/* {menuList} */}
+                            <div class=' border border-solid border-red-500'>
+                            <Graph data={surveyInfo}></Graph>
+
+                            </div>
+                            <button style={{ maxWidth: '80px', maxHeight: '80px', width: '15vw', height: '15vw' }}
+                                class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray"
+                                onClick={() => { navigate('/menu'); }}
+                            ><TextBold>+</TextBold></button>
                         </div>
 
                     </div>
@@ -133,9 +317,9 @@ export default function Group() {
                 {restaurantList}
             </div>
         </div>
-  );
+    );
 
-    
+
 }
 
 
