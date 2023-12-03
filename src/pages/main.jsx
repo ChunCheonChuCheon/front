@@ -5,7 +5,7 @@ export default function MainPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/main');
+    navigate('/login');
   }, [navigate]);
 
   return <div />;

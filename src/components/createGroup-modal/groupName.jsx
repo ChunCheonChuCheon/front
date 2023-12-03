@@ -20,7 +20,7 @@ export default function GroupName(props) {
 
       <div class='flex flex-col mt-5'>
         <input
-          {...props.register('groupName', { required: true})}
+          {...props.register('name', { required: true})}
           class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='text'
           placeholder='그룹 이름'

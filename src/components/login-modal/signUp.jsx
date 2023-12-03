@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthToken } from '../../redux/actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function SignUp() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,19 +16,20 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${baseURL}/auth/login`, {
+        console.log(baseURL);
+      const response = await axios.post(`${baseURL}/user`, {
         id: data.id,
         password: data.password,
       });
 
       if (response.status === 201) {
-        const result = response.data;
-        dispatch(setAuthToken(result.access_token));
-        navigate('/main');
+
+        //회원가입시 저보처리 
+        navigate('/login');
         
       } else {
         console.error('API 호출 실패');
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        alert('이미 있는 아이디입니다. ');
 
       }
     } catch (error) {
@@ -40,9 +41,9 @@ export default function Login() {
   return (
     <WhiteBox>
       <TextBold>
-        <div class='mb-3'>로그인</div>
+        <div class='mb-3'>회원가입</div>
       </TextBold>
-      <TextNormal>소셜로그인은 아니지만 로그인하기 </TextNormal>
+      <TextNormal>소셜회원가입은 아니지만 회원가입하기 </TextNormal>
       {/*make login form prettier using react-hook-form*/}
       <form class='flex flex-col mt-5' onSubmit={handleSubmit(onSubmit)}>
         <input
@@ -65,15 +66,14 @@ export default function Login() {
           class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white font-bold'
           type='submit'
         >
-          로그인
+          가입하기
         </button>
       </form>
-      {/* 회원가입 버튼 */}
       <button
         class='ml-auto text-blue-500 hover:text-blue-700 hover:underline  mt-5 p-2 '
-        onClick={() => navigate('/signup')}
+        onClick={() => navigate('/login')}
       >
-        회원가입
+        로그인
       </button>
     </WhiteBox>
   );

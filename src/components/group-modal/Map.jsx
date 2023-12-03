@@ -6,21 +6,24 @@ const Map = (props) => {
     const [location, setLocation] = useState(props.location);
 
 
-
+    
     
 
     return (
-        <div>
+        <div className='text-center'>
             <MapContainer
                 center={props.location}
                 style={{ height: props.height }}
                 zoom={15}
-            >
+                zoomControl={false}
+            >   
+
+
+
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {/* 가운데에 고정된 마커 추가 */}
                 <Marker position={location} >
                 </Marker>
             </MapContainer>
