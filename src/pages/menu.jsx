@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import DefaultLayout from '../layouts/default';
 import MenuModal from '../components/menu-modal/menu';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { set } from 'react-hook-form';
 
 
 export default function MenuPage(props) {
@@ -95,6 +94,7 @@ export default function MenuPage(props) {
             console.log('유스이펙트 실행됨');
             handleNextModal();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [foodCategoryList]);
 
     const handleGoodButtonClick = () => {

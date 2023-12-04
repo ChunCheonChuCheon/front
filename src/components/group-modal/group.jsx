@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import Map from './Map';
@@ -8,7 +7,6 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Graph from './graph';
-import { set } from 'react-hook-form';
 
 export default function Group() {
     const navigate = useNavigate();
@@ -65,7 +63,7 @@ export default function Group() {
 
     const formatDate = (isoDateTime) => {
         const [datePart, timePart] = isoDateTime.split('T');
-        const [year, month, day] = datePart.split('-');
+        const [, month, day] = datePart.split('-');
         const [hour, minute] = timePart.replace(/\.\d+Z$/, '').split(':');
 
         return `${month}월 ${day}일 ${hour}:${minute}`;
@@ -192,6 +190,7 @@ export default function Group() {
         getGroupInfo();
         getSurveyInfo();
         getRecommendedRestaurant();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -209,7 +208,7 @@ export default function Group() {
                 <TextBold><div class='mb-4'>{restaurant.name}</div></TextBold>
                 <div class="grid grid-cols-5 gap-4    ">
                     <div class="col-span-2 ...">
-                        <img src={restaurant.img}
+                        <img src={restaurant.img} alt='restuarant'
                             style={{ maxWidth: '140px', maxHeight: '140px', width: '25vw', height: '16vh' }}
                             class=" rounded-xl shadow-xl border-2 border-solid border-gray"></img>
                     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis} from 'recharts';
 import { useState } from 'react';
 
 
