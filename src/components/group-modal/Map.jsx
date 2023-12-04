@@ -1,9 +1,8 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const Map = (props) => {
-    const mapRef = React.useRef(null);
-    const [location, setLocation] = useState(props.location);
+    const [location] = useState(props.location);
 
 
     

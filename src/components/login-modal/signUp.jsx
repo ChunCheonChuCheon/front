@@ -4,14 +4,12 @@ import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthToken } from '../../redux/actions/authActions';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const baseURL = useSelector((state) => state.baseURL);
 
   const onSubmit = async (data) => {

@@ -1,7 +1,6 @@
 import React from 'react'
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
-import TextNormal from '../text-normal';
 
 const MenuModal = (props) => {
 
@@ -13,7 +12,7 @@ const MenuModal = (props) => {
   return (
     <WhiteBox>
       <div class='flex flex-col justify-between items-center'>
-        <img src={props.category.img} class="w-4/5 h-4/5 my-3 rounded-2xl shadow-xl border border-solid border-gray"></img>
+        <img src={props.category.img} alt='category food' class="w-4/5 h-4/5 my-3 rounded-2xl shadow-xl border border-solid border-gray"></img>
         <TextBold>
           <div class='mb-5'>{props.category.name}</div>
         </TextBold>
