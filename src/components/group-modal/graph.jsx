@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis} from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis,ResponsiveContainer} from 'recharts';
 import { useState } from 'react';
 
 
@@ -37,21 +37,26 @@ useEffect(() => {
   }
 
   return (
+
     <BarChart
-      width={300}
-      height={200}
+      width={200} height={100}
       data={data}
       margin={{
-        top: 20,
-        right: 10,
-        left: 0,
+        top: 5,
+        right: 30,
+        left: 20,
         bottom: 5,
       }}
     >
       <XAxis 
-      width={10}
-      height={30}  dataKey="name" />
-      <YAxis />
+      width={0}
+      height={30}  dataKey="name" 
+      interval={0}
+      tick={{ fontSize: 5 }}
+       />
+      
+      
+      <YAxis tick={{ fontSize: 5}} />
       <Bar dataKey="count" fill="#8884d8" label={{ position: 'top' }}>
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={colors[index % 4]} />
