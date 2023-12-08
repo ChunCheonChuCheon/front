@@ -6,18 +6,22 @@ import Map from './Map';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Graph from './graph';
+import BarChart from './graph2';
+import { FaRegCopy } from "react-icons/fa";
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 export default function Group() {
     const navigate = useNavigate();
-    const baseURL = useSelector((state) => state.baseURL);
-    const token = useSelector((state) => state.auth);
+    const [baseURL] = useState(useSelector((state) => state.baseURL));
+    const [token] = useState(useSelector((state) => state.auth));
     const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>
         <div class='w-full h-full py-5 px-2.5 bg-white rounded-xl shadow-xl flex flex-col '>
             {children}
         </div>
+
+    
 
 
     const [groupInfo, setGroupInfo] = useState({
@@ -117,7 +121,7 @@ export default function Group() {
                 },
             });
             if (response.status === 200) {
-                
+
                 const result = response.data;
                 console.log('getSurveyInfo: ', result);
                 setSurveyInfo({
@@ -142,11 +146,11 @@ export default function Group() {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-    
+
             if (response.status === 200) {
                 const result = response.data;
                 console.log('getRecommendedRestaurant: ', result);
-    
+
                 const recommendedRestaurantsPromises = result.recommendation.map(async (restaurant) => {
                     try {
                         const response2 = await axios.get(`${baseURL}/restaurant?id=${restaurant.id}`, {
@@ -173,9 +177,9 @@ export default function Group() {
                         console.error('API 호출 중 오류(getRestaurant):', error);
                     }
                 });
-    
+
                 const recommendedRestaurants = await Promise.all(recommendedRestaurantsPromises);
-    
+
                 setRecommendedRestaurant(recommendedRestaurants);
             } else {
                 console.error('API 호출 실패');
@@ -184,9 +188,11 @@ export default function Group() {
             console.error('API 호출 중 오류:', error);
         }
     }
-    
+
     useEffect(() => {
-        console.log('token',token);
+        console.log('token', token);
+        console.log('url', baseURL);
+
         getGroupInfo();
         getSurveyInfo();
         getRecommendedRestaurant();
@@ -213,7 +219,7 @@ export default function Group() {
                             class=" rounded-xl shadow-xl border-2 border-solid border-gray"></img>
                     </div>
                     <div class="  col-span-3 h-4/5 w-full...">
-                        <Map location={[restaurant.locationX,restaurant.locationY]} height='16vh'></Map>
+                        <Map location={[restaurant.locationX, restaurant.locationY]} height='16vh'></Map>
                     </div>
                     <div class="col-span-2 ...">
                         <TextNormal><div class='mb-4 text-center'>#{restaurant.category}</div></TextNormal>
@@ -229,21 +235,52 @@ export default function Group() {
     );
 
 
+    const handleCopyClick = () => {
+        const tempInput = document.createElement('input');
+        tempInput.value = pin;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        alert('핀 번호가 복사되었습니다.');
+    };
+
+
+
+    const handleRefresh = async () => {
+        getGroupInfo();
+        getSurveyInfo();
+        getRecommendedRestaurant();
+    };
 
 
     return (
+
         <div class=' w-4/5 max-w-[400px]  '>
-            {/* 오른쪽에 붙어있는 groupInfo.name */}
-            <div class='flex justify-center  items-center '>
-                <TextBold>
-                    <div class=' my-3 border border-solid border-red-500'>{groupInfo.name}</div>
-                </TextBold>
+        <PullToRefresh onRefresh={handleRefresh}>
+            
+
+            <div className='w-full h-auto px-2.5 my-4 bg-white rounded-xl shadow-xl flex flex-col'>
+                <div className='flex justify-between items-center'>
+                    <TextBold>
+                        <div className='my-3 pr-5'>{groupInfo.name}</div>
+                    </TextBold>
+                    <div className='flex justify-center items-center'>
+                        <TextNormal>
+                            PIN:
+                        </TextNormal>
+                        <TextNormal>
+                            <u className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}>{pin}
+                            </u>
+                        </TextNormal>
+                        <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' />
+
+                        <div className='flex' >
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button onClick={()=>{
-                getGroupInfo();
-                getSurveyInfo();
-                getRecommendedRestaurant();
-            }}>새로고침</button>
+          
 
             <div class="grid grid-cols-3  gap-4  ">
                 <div class="row-span-2 col-span-2 ... ">
@@ -280,19 +317,17 @@ export default function Group() {
             </div>
             <div class='mt-5'>
                 <WhiteBox2>
-                    <div class='flex flex-col'>
+                    <div class='flex flex-col justify-between'>
 
                         <TextBold>
                             <div class='mb-3'>선호 음식 카테고리</div>
                         </TextBold>
-                        <div class='flex justify-center  items-center '>
 
+                        {/* {menuList} */}
+                        {/* <Graph data={surveyInfo}></Graph> */}
+                        <BarChart data={surveyInfo}></BarChart>
+                        <div class='flex justify-center items-center'>
 
-                            {/* {menuList} */}
-                            <div class=' border border-solid border-red-500'>
-                            <Graph data={surveyInfo}></Graph>
-
-                            </div>
                             <button style={{ maxWidth: '80px', maxHeight: '80px', width: '15vw', height: '15vw' }}
                                 class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray"
                                 onClick={() => { navigate('/menu'); }}
@@ -315,7 +350,10 @@ export default function Group() {
             <div class=''>
                 {restaurantList}
             </div>
+        </PullToRefresh>
+
         </div>
+
     );
 
 

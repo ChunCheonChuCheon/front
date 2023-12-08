@@ -15,6 +15,7 @@ const Map = (props) => {
                 style={{ height: props.height }}
                 zoom={15}
                 zoomControl={false}
+                dragging={false}
             >   
 
 
