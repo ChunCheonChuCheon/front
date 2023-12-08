@@ -21,6 +21,8 @@ export default function Group() {
             {children}
         </div>
 
+    
+
 
     const [groupInfo, setGroupInfo] = useState({
         name: '',
