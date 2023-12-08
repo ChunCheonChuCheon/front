@@ -1,4 +1,4 @@
-const initialState = 'https://api.chucheon.com/';
+const initialState = 'https://api.chucheon.com';
   
 const baseUrlReducer = (state=initialState, action) => {
     switch (action.type) {
