@@ -178,8 +178,10 @@ export default function Group() {
     const getGroupInfo = () => {
 
         const result = { ...location.state };
+        console.log('getgroupinfo들어옴 result: ',result)
         //joinGroup을 통해 참여
-        if(result){ 
+        if(location.state){ 
+            console.log('전 페이지에서 state보낸게 있다고 판정됨')
             setGroupInfo({
                 name: result.name,
                 location: [result.locationX, result.locationY],
@@ -190,7 +192,33 @@ export default function Group() {
         }
         else
         {
-            
+            async function _getGroupInfo() {
+                try {
+
+                    const response = await axios.get(`${baseURL}/group?pin=${pin}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
+                    if (response.status === 200) {
+                        const result = response.data;
+                        setGroupInfo({
+                            name: result.name,
+                            location: [result.locationX, result.locationY],
+                            date: formatDate(result.date),
+                            range: formatRange(result.range),
+                        });
+        
+                    } else {
+                        console.error('API 호출 실패');
+                    }
+                } catch (error) {
+                    console.error('API 호출 중 오류(getGroupInfo):', error);
+                }
+                
+            }
+            _getGroupInfo();
+
         }
         
 
