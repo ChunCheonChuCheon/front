@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
@@ -12,7 +12,6 @@ export default function JoinGroup() {
   const { register, handleSubmit, setFocus } = useForm();
   const navigate = useNavigate();
   const [baseURL] = useState(useSelector((state) => state.baseURL));
-  const pinRef = [...new Array(6)].map(() => React.createRef());
 
   const token = localStorage.getItem('token');
 
