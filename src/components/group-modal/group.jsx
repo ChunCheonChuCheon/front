@@ -14,7 +14,8 @@ export default function Group() {
     const navigate = useNavigate();
     const location = useLocation();
     const [baseURL] = useState(useSelector((state) => state.baseURL));
-    const [token] = useState(useSelector((state) => state.auth));
+    // const [token] = useState(useSelector((state) => state.auth));
+    const token = localStorage.getItem('token');
     const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>
@@ -177,13 +178,21 @@ export default function Group() {
     const getGroupInfo = () => {
 
         const result = { ...location.state };
-        setGroupInfo({
-            name: result.name,
-            location: [result.locationX, result.locationY],
-            date: formatDate(result.date),
-            range: formatRange(result.range),
-        });
-
+        //joinGroup을 통해 참여
+        if(result){ 
+            setGroupInfo({
+                name: result.name,
+                location: [result.locationX, result.locationY],
+                date: formatDate(result.date),
+                range: formatRange(result.range),
+            });
+    
+        }
+        else
+        {
+            
+        }
+        
 
     }
 

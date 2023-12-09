@@ -14,7 +14,9 @@ export default function CreateGroupPage() {
   const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm();
   const baseURL = useSelector((state) => state.baseURL);
-  const token = useSelector((state) => state.auth);
+  // const token = useSelector((state) => state.auth);
+  const token = localStorage.getItem('token');
+
 
   //입력한 그룹정보 처리한느 곳
   const onSubmit = async (data) => {

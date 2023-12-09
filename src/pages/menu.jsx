@@ -32,7 +32,8 @@ export default function MenuPage(props) {
 
     const navigate = useNavigate();
     const baseURL = useSelector((state) => state.baseURL);
-    const token = useSelector((state) => state.auth);
+    // const token = useSelector((state) => state.auth);
+    const token = localStorage.getItem('token');
 
 
 
