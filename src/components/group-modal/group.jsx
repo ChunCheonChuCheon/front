@@ -14,8 +14,7 @@ export default function Group() {
     const navigate = useNavigate();
     const location = useLocation();
     const [baseURL] = useState(useSelector((state) => state.baseURL));
-    const token = localStorage.getItem('token');
-    // const [token] = useState(useSelector((state) => state.auth));
+    const [token] = useState(useSelector((state) => state.auth));
     const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>

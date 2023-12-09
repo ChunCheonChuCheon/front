@@ -12,9 +12,7 @@ export default function JoinGroup() {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
     const [baseURL] = useState(useSelector((state) => state.baseURL));
-    // const [token] = useState(useSelector((state) => state.auth));
-    const token = localStorage.getItem('token');
-
+    const [token] = useState(useSelector((state) => state.auth));
     
 
     async function onSubmit(data) {

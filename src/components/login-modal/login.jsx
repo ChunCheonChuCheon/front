@@ -23,8 +23,7 @@ export default function Login() {
 
       if (response.status === 201) {
         const result = response.data;
-        // dispatch(setAuthToken(result.access_token));
-        localStorage.setItem('token',result.access_token);
+        dispatch(setAuthToken(result.access_token));
         navigate('/main');
         
       } else {
