@@ -1,6 +1,7 @@
 import React from 'react'
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
+import TextNormal from '../text-normal';
 
 const MenuModal = (props) => {
 
@@ -17,12 +18,15 @@ const MenuModal = (props) => {
           <div className='flex  justify-between bg-blue-500 text-white px-2 py-1' style={{ width: `${progress.toFixed(0)}%` }}>
             <div>
             </div>
-            <div >
+            <TextNormal>
               {progress.toFixed(0)}%
-            </div>
+            </TextNormal>
+
           </div>
         </div>
-        <img src={props.category.img} alt='category food' class="w-4/5 h-4/5 my-3 rounded-2xl shadow-xl border border-solid border-gray"></img>
+        <div className="w-4/5 h-40 my-3 overflow-hidden rounded-2xl shadow-xl border border-solid border-red-500">
+          <img src={props.category.img} alt='category food' class="w-full h-full object-cover"></img>
+        </div>
         <TextBold>
           <div class='mb-5'>{props.category.name}</div>
         </TextBold>

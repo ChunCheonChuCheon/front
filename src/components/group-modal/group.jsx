@@ -19,7 +19,7 @@ export default function Group() {
     const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>
-        <div class='w-full h-full py-5 px-2.5 bg-white rounded-xl shadow-xl flex flex-col '>
+        <div class='w-full h-full py-5 px-2.5 bg-white rounded-2xl shadow-xl flex flex-col '>
             {children}
         </div>
 
@@ -305,7 +305,7 @@ export default function Group() {
                                 <u className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}>{pin}
                                 </u>
                             </TextNormal>
-                            <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' />
+                            <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}/>
 
                             <div className='flex' >
                             </div>

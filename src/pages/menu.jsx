@@ -29,7 +29,7 @@ export default function MenuPage(props) {
         { category: 17, name: '국밥', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTVfMjQy%2FMDAxNzAwMDIxOTAyNzgx.IKNzUAq6NYNvBIbKH_nsHBVb-4ldtifRo6vUUWAKpcUg.3Cot1PFYHmLfppY3QvFbePL_nLVVL__d2MCsBacqsrsg.JPEG.jlfoodltd%2F6.jpg&type=sc960_832', score: null }
     ]);
 
-
+    const [isLastButtonClick,setIsLastButtonClick] = useState(false);
     const navigate = useNavigate();
     const baseURL = useSelector((state) => state.baseURL);
     // const token = useSelector((state) => state.auth);
@@ -53,7 +53,6 @@ export default function MenuPage(props) {
             });
             if (response.status === 201) {
                 const result = response.data;
-                console.log('submitSurvey: ', result);
                 navigate(-1);
 
 
@@ -67,14 +66,19 @@ export default function MenuPage(props) {
     //다음 모달로 넘어가는 함수
     const handleNextModal = () => {
 
-        //마지막 메뉴에서 이 함수를 호출했을때
-        if (currentCategoryIndex === foodCategoryList.length - 1) {
-            console.log
-            submitServey();
-            //여기서 서버에 선호메뉴만 넘겨주는것도 해야될듯
+        if(!isLastButtonClick)
+        {   
+        
+                //마지막 메뉴에서 이 함수를 호출했을때
+            if (currentCategoryIndex === foodCategoryList.length - 1) {
+                setIsLastButtonClick(true);
+                submitServey();
+                //여기서 서버에 선호메뉴만 넘겨주는것도 해야될듯
+            }
+            else
+                setCurrentCategoryIndex((prevIndex) => prevIndex + 1);
         }
-        else
-            setCurrentCategoryIndex((prevIndex) => prevIndex + 1);
+        
     };
 
     //category의 score를 변경하는 함수
