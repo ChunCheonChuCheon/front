@@ -72,6 +72,7 @@ export default function Time(props) {
         onClick={() => { 
           const combinedDateTime = combineDateAndTime(selectedDate, selectedTime);
           props.setValue('date', `${combinedDateTime.getFullYear()}-${(combinedDateTime.getMonth() + 1).toString().padStart(2, '0')}-${combinedDateTime.getDate().toString().padStart(2, '0')} ${combinedDateTime.getHours().toString().padStart(2, '0')}:${combinedDateTime.getMinutes().toString().padStart(2, '0')}:${combinedDateTime.getSeconds().toString().padStart(2, '0')}`);
+          console.log("시간: " + combinedDateTime);         
           props.handleStep(1);
         }}
       ><TextNormal>다음</TextNormal>
