@@ -24,7 +24,7 @@ const MenuModal = (props) => {
 
           </div>
         </div>
-        <div className="w-4/5 h-40 my-3 overflow-hidden rounded-2xl shadow-xl border border-solid border-red-500">
+        <div className="w-4/5 h-48 my-3 overflow-hidden rounded-2xl shadow-xl border border-solid border-gray">
           <img src={props.category.img} alt='category food' class="w-full h-full object-cover"></img>
         </div>
         <TextBold>

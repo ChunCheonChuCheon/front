@@ -48,8 +48,8 @@ export default function Group() {
                 "score": 0
             }
         ],
-        "groupSize": 2,
-        "noResponseNumber": 5
+        "groupSize": 99,
+        "noResponseNumber": 99
     });
 
     const [recommendedRestaurant, setRecommendedRestaurant] = useState([
@@ -179,17 +179,16 @@ export default function Group() {
 
         const result = { ...location.state };
         //joinGroup을 통해 참여
-        if(location.state){ 
+        if (location.state) {
             setGroupInfo({
                 name: result.name,
                 location: [result.locationX, result.locationY],
                 date: formatDate(result.date),
                 range: formatRange(result.range),
             });
-    
+
         }
-        else
-        {
+        else {
             async function _getGroupInfo() {
                 try {
 
@@ -206,19 +205,19 @@ export default function Group() {
                             date: formatDate(result.date),
                             range: formatRange(result.range),
                         });
-        
+
                     } else {
                         console.error('API 호출 실패');
                     }
                 } catch (error) {
                     console.error('API 호출 중 오류(getGroupInfo):', error);
                 }
-                
+
             }
             _getGroupInfo();
 
         }
-        
+
 
     }
 
@@ -239,13 +238,29 @@ export default function Group() {
     // );
 
 
+    const getDistance = (location) => {
+        const [lat1, lon1] = location;
+        const [lat2, lon2] = groupInfo.location;
+
+        const calculateX = (lat) => Math.cos(lat) * 6400 * 2 * Math.PI / 360;
+
+        const X = calculateX(lat1) * Math.abs(lon1 - lon2);
+        const Y = 111 * Math.abs(lat1 - lat2);
+
+        const D = Math.sqrt(X ** 2 + Y ** 2); // 거리 (단위: km)
+        return D;
+    };
+
 
 
 
     const restaurantList = recommendedRestaurant.map((restaurant) =>
         <div key={restaurant.name} class='mb-5 '>
             <WhiteBox2>
-                <TextBold><div class='mb-4'>{restaurant.name}</div></TextBold>
+                <div class="flex  justify-between items-end mb-4">
+                    <TextBold>{restaurant.name}</TextBold>
+                    <TextNormal>({getDistance([restaurant.locationX, restaurant.locationY]).toFixed(1)}km)</TextNormal>
+                </div>
                 <div class="grid grid-cols-5 gap-4    ">
                     <div class="col-span-2 ...">
                         <img src={restaurant.img} alt='restuarant'
@@ -305,7 +320,7 @@ export default function Group() {
                                 <u className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}>{pin}
                                 </u>
                             </TextNormal>
-                            <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}/>
+                            <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick} />
 
                             <div className='flex' >
                             </div>
