@@ -167,10 +167,10 @@ export default function Group() {
     }
 
     const UpdateInfo = () => {
-        console.log("UpdateInfo 실행");
-        console.log("baseURL: " + baseURL);
-        console.log("Token: " + token);
-        console.log("PIN: " + pin);
+        // console.log("UpdateInfo 실행");
+        // console.log("baseURL: " + baseURL);
+        // console.log("Token: " + token);
+        // console.log("PIN: " + pin);
         getSurveyInfo();
         getRecommendedRestaurant();
     }
@@ -178,10 +178,8 @@ export default function Group() {
     const getGroupInfo = () => {
 
         const result = { ...location.state };
-        console.log('getgroupinfo들어옴 result: ',result)
         //joinGroup을 통해 참여
         if(location.state){ 
-            console.log('전 페이지에서 state보낸게 있다고 판정됨')
             setGroupInfo({
                 name: result.name,
                 location: [result.locationX, result.locationY],

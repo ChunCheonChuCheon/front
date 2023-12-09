@@ -48,7 +48,7 @@ export default function CreateGroupPage() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleStep = (step) => {
-    if (currentStep === 1 && step === -1) navigate('/main?isModalOpen=false');
+    if (currentStep === 1 && step === -1) navigate('/main');
     else if (currentStep === 4 && step === 1) {
       handleSubmit(onSubmit)();
 
