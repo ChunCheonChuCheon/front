@@ -3,14 +3,43 @@ import { useForm } from 'react-hook-form';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+
 export default function JoinGroup() {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const [baseURL] = useState(useSelector((state) => state.baseURL));
+    const [token] = useState(useSelector((state) => state.auth));
+    
+
+    async function onSubmit(data) {
+        try {
+
+            const response = await axios.get(`${baseURL}/group?pin=${data.pinNumber}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                const result = response.data;
+                
+                navigate(`/group/${data.pinNumber}`,{state:result});
 
 
-    const onSubmit = async (data) => {
-        navigate(`/group/${data.pinNumber}`);
-    };
+            } else {
+                
+                console.error('API 호출 실패');
+            }
+        } catch (error) {
+            console.error('API 호출 중 오류(joinGroup: Onsubmit):', error);
+            alert('핀번호가 존재하지 않습니다.');
+        }
+    }
+
+ 
 
     const JoinGroupWhiteBox = ({ children }) => {
         return (
