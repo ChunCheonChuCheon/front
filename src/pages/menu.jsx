@@ -52,7 +52,6 @@ export default function MenuPage(props) {
                 },
             });
             if (response.status === 201) {
-                const result = response.data;
                 navigate(-1);
 
 
@@ -73,7 +72,6 @@ export default function MenuPage(props) {
             if (currentCategoryIndex === foodCategoryList.length - 1) {
                 setIsLastButtonClick(true);
                 submitServey();
-                //여기서 서버에 선호메뉴만 넘겨주는것도 해야될듯
             }
             else
                 setCurrentCategoryIndex((prevIndex) => prevIndex + 1);
