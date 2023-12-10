@@ -56,7 +56,6 @@ export default function Login() {
           {...register('password', {
             required: true,
             maxLength: 20,
-            pattern: /^[A-Za-z0-9]+$/i,
           })}
           class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='password'

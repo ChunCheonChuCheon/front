@@ -17,7 +17,7 @@ export default function Group() {
     // const [token] = useState(useSelector((state) => state.auth));
     const token = localStorage.getItem('token');
     const { pin } = useParams();
-
+    const [userResponded, setUserResponded] = useState(false);
     const WhiteBox2 = ({ children }) =>
         <div class='w-full h-full py-5 px-2.5 bg-white rounded-2xl shadow-xl flex flex-col '>
             {children}
@@ -88,6 +88,33 @@ export default function Group() {
         }
     }
 
+
+    async function checkSurveyResponse() {
+        try {
+            const response = await axios.get(`${baseURL}/user/respondent`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                const result = response.data;
+                console.log("유저 응답여부: ", result);
+                if (result.result === true) {
+                    setUserResponded(true)
+                } else {
+                    setUserResponded(false)
+                }
+
+
+            } else {
+                console.error('API 호출 실패');
+            }
+        } catch (error) {
+            console.error('API 호출 중 오류(getSurveyInfo):', error);
+        }
+
+    }
 
 
 
@@ -171,6 +198,7 @@ export default function Group() {
         // console.log("baseURL: " + baseURL);
         // console.log("Token: " + token);
         // console.log("PIN: " + pin);
+        checkSurveyResponse();
         getSurveyInfo();
         getRecommendedRestaurant();
     }
@@ -372,7 +400,13 @@ export default function Group() {
 
                             {/* {menuList} */}
                             {/* <Graph data={surveyInfo}></Graph> */}
-                            <BarChart data={surveyInfo}></BarChart>
+                            {userResponded ? (
+                                <BarChart data={surveyInfo}></BarChart>
+                            ) :<div className="text-red-500 text-center">
+                            <TextBold>음식 선호도 조사에 응답해주세요!</TextBold>
+                            <TextBold>↓</TextBold>
+                        </div>}
+
                             <div class='flex justify-center items-center'>
 
                                 <button style={{ maxWidth: '80px', maxHeight: '80px', width: '15vw', height: '15vw' }}
@@ -395,7 +429,10 @@ export default function Group() {
                     < div class='border-b-2 border-[#000000] w-1/3  ml-3'></div>
                 </div>
                 <div class=''>
-                    {restaurantList}
+                    {userResponded ? (
+                        restaurantList 
+                    ) :null}
+
                 </div>
             </PullToRefresh>
 

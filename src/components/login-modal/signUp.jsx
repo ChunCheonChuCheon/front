@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const baseURL = useSelector((state) => state.baseURL);
 
@@ -27,7 +27,6 @@ export default function SignUp() {
     } catch (error) {
       console.error('API 호출 중 오류:', error);
       alert('이미 있는 아이디입니다.');
-
     }
   };
 
@@ -52,7 +51,7 @@ export default function SignUp() {
           type='text'
           placeholder='아이디'
         />
-        {errors.id && <p className='text-red-500'>{errors.id.message}</p>}
+        {errors && errors.id && <p className='text-red-500'>{errors.id.message}</p>}
 
         <input
           {...register('password', {
@@ -68,7 +67,7 @@ export default function SignUp() {
           type='password'
           placeholder='비밀번호'
         />
-        {errors.password && <p className='text-red-500'>{errors.password.message} </p>}
+        {errors && errors.password && <p className='text-red-500'>{errors.password.message} </p>}
 
         <button
           className='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white font-bold'
