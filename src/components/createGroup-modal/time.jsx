@@ -28,6 +28,14 @@ export default function Time(props) {
     );
     return combinedDateTime;
   };
+
+  const CustomInput = ({ value, onClick }) => (
+    <input
+      value={value}
+      onClick={onClick}
+      readOnly // readOnly 속성 추가
+    />
+  );
   return (
     <WhiteBox>
       <div className='flex justify-between items-center'>
@@ -44,26 +52,28 @@ export default function Time(props) {
 
 
       <label className="border border-solid border-gray-300 p-4 rounded-md mb-4">
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          minDate={new Date()}
-          dateFormat="yyyy년 MM월 dd일"
-          closeOnScroll={true}
-        />
+      <DatePicker
+        selected={selectedDate}
+        onChange={handleDateChange}
+        minDate={new Date()}
+        dateFormat="yyyy년 MM월 dd일"
+        closeOnScroll={true}
+        customInput={<CustomInput />}
+      />
       </label>
 
       <label className="border border-solid border-gray-300 p-4 rounded-md mb-4">
-        <DatePicker
-          selected={selectedTime}
-          onChange={handleTimeChange}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={30}
-          timeCaption="시간"
-          dateFormat="aa h시 mm분"
-          closeOnScroll={true}
-        />
+      <DatePicker
+        selected={selectedTime}
+        onChange={handleTimeChange}
+        showTimeSelect
+        showTimeSelectOnly
+        timeIntervals={30}
+        timeCaption="시간"
+        dateFormat="aa h시 mm분"
+        closeOnScroll={true}
+        customInput={<CustomInput />}
+      />
       </label>
 
       {/* 다음 버튼 */}
