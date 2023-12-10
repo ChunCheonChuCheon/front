@@ -5,23 +5,25 @@ import TextNormal from '../text-normal';
 import Map from './Map';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import BarChart from './graph2';
 import { FaRegCopy } from "react-icons/fa";
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 export default function Group() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [baseURL] = useState(useSelector((state) => state.baseURL));
-    const [token] = useState(useSelector((state) => state.auth));
+    // const [token] = useState(useSelector((state) => state.auth));
+    const token = localStorage.getItem('token');
     const { pin } = useParams();
 
     const WhiteBox2 = ({ children }) =>
-        <div class='w-full h-full py-5 px-2.5 bg-white rounded-xl shadow-xl flex flex-col '>
+        <div class='w-full h-full py-5 px-2.5 bg-white rounded-2xl shadow-xl flex flex-col '>
             {children}
         </div>
 
-    
+
 
 
     const [groupInfo, setGroupInfo] = useState({
@@ -46,8 +48,8 @@ export default function Group() {
                 "score": 0
             }
         ],
-        "groupSize": 2,
-        "noResponseNumber": 5
+        "groupSize": 99,
+        "noResponseNumber": 99
     });
 
     const [recommendedRestaurant, setRecommendedRestaurant] = useState([
@@ -86,31 +88,8 @@ export default function Group() {
         }
     }
 
-    async function getGroupInfo() {
-        try {
 
-            const response = await axios.get(`${baseURL}/group?pin=${pin}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            if (response.status === 200) {
-                const result = response.data;
-                console.log('getGroupInfo: ', result);
-                setGroupInfo({
-                    name: result.name,
-                    location: [result.locationX, result.locationY],
-                    date: formatDate(result.date),
-                    range: formatRange(result.range),
-                });
 
-            } else {
-                console.error('API 호출 실패');
-            }
-        } catch (error) {
-            console.error('API 호출 중 오류(getGroupInfo):', error);
-        }
-    }
 
     async function getSurveyInfo() {
         try {
@@ -123,7 +102,6 @@ export default function Group() {
             if (response.status === 200) {
 
                 const result = response.data;
-                console.log('getSurveyInfo: ', result);
                 setSurveyInfo({
                     "top3Category": result.top3Category,
                     "groupSize": result.groupSize,
@@ -149,7 +127,6 @@ export default function Group() {
 
             if (response.status === 200) {
                 const result = response.data;
-                console.log('getRecommendedRestaurant: ', result);
 
                 const recommendedRestaurantsPromises = result.recommendation.map(async (restaurant) => {
                     try {
@@ -174,7 +151,7 @@ export default function Group() {
                             };
                         }
                     } catch (error) {
-                        console.error('API 호출 중 오류(getRestaurant):', error);
+                        console.error('API 호출 중 오류(getRestaurant 안쪽):', error);
                     }
                 });
 
@@ -185,17 +162,73 @@ export default function Group() {
                 console.error('API 호출 실패');
             }
         } catch (error) {
-            console.error('API 호출 중 오류:', error);
+            console.error('API 호출 중 오류(getRestaurant):', error);
         }
     }
 
-    useEffect(() => {
-        console.log('token', token);
-        console.log('url', baseURL);
-
-        getGroupInfo();
+    const UpdateInfo = () => {
+        // console.log("UpdateInfo 실행");
+        // console.log("baseURL: " + baseURL);
+        // console.log("Token: " + token);
+        // console.log("PIN: " + pin);
         getSurveyInfo();
         getRecommendedRestaurant();
+    }
+
+    const getGroupInfo = () => {
+
+        const result = { ...location.state };
+        //joinGroup을 통해 참여
+        if (location.state) {
+            setGroupInfo({
+                name: result.name,
+                location: [result.locationX, result.locationY],
+                date: formatDate(result.date),
+                range: formatRange(result.range),
+            });
+
+        }
+        else {
+            async function _getGroupInfo() {
+                try {
+
+                    const response = await axios.get(`${baseURL}/group?pin=${pin}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
+                    if (response.status === 200) {
+                        const result = response.data;
+                        setGroupInfo({
+                            name: result.name,
+                            location: [result.locationX, result.locationY],
+                            date: formatDate(result.date),
+                            range: formatRange(result.range),
+                        });
+
+                    } else {
+                        console.error('API 호출 실패');
+                    }
+                } catch (error) {
+                    console.error('API 호출 중 오류(getGroupInfo):', error);
+                }
+
+            }
+            _getGroupInfo();
+
+        }
+
+
+    }
+
+
+
+    useEffect(() => {
+        getGroupInfo();
+        UpdateInfo();
+        // console.log('token', token);
+        // console.log('url', baseURL);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -205,13 +238,29 @@ export default function Group() {
     // );
 
 
+    const getDistance = (location) => {
+        const [lat1, lon1] = location;
+        const [lat2, lon2] = groupInfo.location;
+
+        const calculateX = (lat) => Math.cos(lat) * 6400 * 2 * Math.PI / 360;
+
+        const X = calculateX(lat1) * Math.abs(lon1 - lon2);
+        const Y = 111 * Math.abs(lat1 - lat2);
+
+        const D = Math.sqrt(X ** 2 + Y ** 2); // 거리 (단위: km)
+        return D;
+    };
+
 
 
 
     const restaurantList = recommendedRestaurant.map((restaurant) =>
-        <div class='mb-5 '>
+        <div key={restaurant.name} class='mb-5 '>
             <WhiteBox2>
-                <TextBold><div class='mb-4'>{restaurant.name}</div></TextBold>
+                <div class="flex  justify-between items-end mb-4">
+                    <TextBold>{restaurant.name}</TextBold>
+                    <TextNormal>({getDistance([restaurant.locationX, restaurant.locationY]).toFixed(1)}km)</TextNormal>
+                </div>
                 <div class="grid grid-cols-5 gap-4    ">
                     <div class="col-span-2 ...">
                         <img src={restaurant.img} alt='restuarant'
@@ -248,109 +297,107 @@ export default function Group() {
 
 
     const handleRefresh = async () => {
-        getGroupInfo();
-        getSurveyInfo();
-        getRecommendedRestaurant();
+        UpdateInfo();
     };
 
 
     return (
 
         <div class=' w-4/5 max-w-[400px]  '>
-        <PullToRefresh onRefresh={handleRefresh}>
-            
+            <PullToRefresh onRefresh={handleRefresh}>
 
-            <div className='w-full h-auto px-2.5 my-4 bg-white rounded-xl shadow-xl flex flex-col'>
-                <div className='flex justify-between items-center'>
-                    <TextBold>
-                        <div className='my-3 pr-5'>{groupInfo.name}</div>
-                    </TextBold>
-                    <div className='flex justify-center items-center'>
-                        <TextNormal>
-                            PIN:
-                        </TextNormal>
-                        <TextNormal>
-                            <u className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}>{pin}
-                            </u>
-                        </TextNormal>
-                        <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' />
 
-                        <div className='flex' >
+                <div className='w-full h-auto px-2.5 my-4 bg-white rounded-xl shadow-xl flex flex-col'>
+                    <div className='flex justify-between items-center'>
+                        <TextBold>
+                            <div className='my-3 pr-5'>{groupInfo.name}</div>
+                        </TextBold>
+                        <div className='flex justify-center items-center'>
+                            <TextNormal>
+                                PIN:
+                            </TextNormal>
+                            <TextNormal>
+                                <u className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick}>{pin}
+                                </u>
+                            </TextNormal>
+                            <FaRegCopy className='text-blue-500 hover:text-blue-700 transition-colors duration-300' onClick={handleCopyClick} />
+
+                            <div className='flex' >
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-          
 
-            <div class="grid grid-cols-3  gap-4  ">
-                <div class="row-span-2 col-span-2 ... ">
-                    <WhiteBox2>
-                        <TextBold>
-                            <div class='mb-4 '>모임 장소</div>
-                        </TextBold>
 
-                        <Map location={groupInfo.location} height='23vh'></Map>
-                    </WhiteBox2></div>
-                <div class="row-span-1 col-span-1 ...">
-                    <WhiteBox2>
-                        <div class='item-center'>
+                <div class="grid grid-cols-3  gap-4  ">
+                    <div class="row-span-2 col-span-2 ... ">
+                        <WhiteBox2>
                             <TextBold>
-                                <div class='mb-4 '>모임 일시</div>
+                                <div class='mb-4 '>모임 장소</div>
+                            </TextBold>
+
+                            <Map location={groupInfo.location} height='23vh'></Map>
+                        </WhiteBox2></div>
+                    <div class="row-span-1 col-span-1 ...">
+                        <WhiteBox2>
+                            <div class='item-center'>
+                                <TextBold>
+                                    <div class='mb-4 '>모임 일시</div>
+                                </TextBold>
+                                <TextNormal>
+                                    <div>{groupInfo.date}</div>
+                                </TextNormal>
+                            </div>
+                        </WhiteBox2></div>
+                    <div class="...">
+                        <WhiteBox2>
+                            <TextBold>
+                                <div class='mb-3'>탐색 범위</div>
                             </TextBold>
                             <TextNormal>
-                                <div>{groupInfo.date}</div>
+                                <div>{groupInfo.range}</div>
                             </TextNormal>
-                        </div>
-                    </WhiteBox2></div>
-                <div class="...">
+                        </WhiteBox2></div>
+                    {/* <div class="border-2 border-solid border-blue-500 col-span-3  ... "> */}
+
+                    {/* </div> */}
+                </div>
+                <div class='mt-5'>
                     <WhiteBox2>
-                        <TextBold>
-                            <div class='mb-3'>탐색 범위</div>
-                        </TextBold>
-                        <TextNormal>
-                            <div>{groupInfo.range}</div>
-                        </TextNormal>
-                    </WhiteBox2></div>
-                {/* <div class="border-2 border-solid border-blue-500 col-span-3  ... "> */}
+                        <div class='flex flex-col justify-between'>
 
-                {/* </div> */}
-            </div>
-            <div class='mt-5'>
-                <WhiteBox2>
-                    <div class='flex flex-col justify-between'>
+                            <TextBold>
+                                <div class='mb-3'>선호 음식 카테고리</div>
+                            </TextBold>
 
-                        <TextBold>
-                            <div class='mb-3'>선호 음식 카테고리</div>
-                        </TextBold>
+                            {/* {menuList} */}
+                            {/* <Graph data={surveyInfo}></Graph> */}
+                            <BarChart data={surveyInfo}></BarChart>
+                            <div class='flex justify-center items-center'>
 
-                        {/* {menuList} */}
-                        {/* <Graph data={surveyInfo}></Graph> */}
-                        <BarChart data={surveyInfo}></BarChart>
-                        <div class='flex justify-center items-center'>
+                                <button style={{ maxWidth: '80px', maxHeight: '80px', width: '15vw', height: '15vw' }}
+                                    class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray"
+                                    onClick={() => { navigate('/menu'); }}
+                                ><TextBold>+</TextBold></button>
+                            </div>
 
-                            <button style={{ maxWidth: '80px', maxHeight: '80px', width: '15vw', height: '15vw' }}
-                                class=" m-1 justify-center items-center rounded-xl shadow-xl border-2 border-solid border-gray"
-                                onClick={() => { navigate('/menu'); }}
-                            ><TextBold>+</TextBold></button>
                         </div>
 
-                    </div>
-
-                </WhiteBox2>
-            </div>
+                    </WhiteBox2>
+                </div>
 
 
 
 
-            <div class='flex justify-center items-center my-7'>
-                <div class='border-b-2 border-[#000000] w-1/3 mr-3'></div>
-                <TextBold>추천 식당</TextBold>
-                < div class='border-b-2 border-[#000000] w-1/3  ml-3'></div>
-            </div>
-            <div class=''>
-                {restaurantList}
-            </div>
-        </PullToRefresh>
+                <div class='flex justify-center items-center my-7'>
+                    <div class='border-b-2 border-[#000000] w-1/3 mr-3'></div>
+                    <TextBold>추천 식당</TextBold>
+                    < div class='border-b-2 border-[#000000] w-1/3  ml-3'></div>
+                </div>
+                <div class=''>
+                    {restaurantList}
+                </div>
+            </PullToRefresh>
 
         </div>
 

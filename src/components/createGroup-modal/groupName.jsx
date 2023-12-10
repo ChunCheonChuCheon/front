@@ -29,6 +29,7 @@ export default function GroupName(props) {
           class='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
           onClick={()=>{
             props.handleStep(1)
+
           }}
         >
          <TextNormal>다음</TextNormal>

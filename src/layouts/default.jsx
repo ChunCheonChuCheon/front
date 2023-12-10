@@ -13,4 +13,3 @@ function DefaultLayout({ children }) {
 }
 
 export default DefaultLayout;
-// background-color: linear-gradient(to bottom, rgba(219, 236, 255, 1) 0%,rgba(226, 217, 255, 1) 100%);

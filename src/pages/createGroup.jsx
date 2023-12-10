@@ -14,14 +14,14 @@ export default function CreateGroupPage() {
   const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm();
   const baseURL = useSelector((state) => state.baseURL);
-  const token = useSelector((state) => state.auth);
+  // const token = useSelector((state) => state.auth);
+  const token = localStorage.getItem('token');
+
 
   //입력한 그룹정보 처리한느 곳
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-      console.log(token);
-      console.log(baseURL);
+      
       const response = await axios.post(`${baseURL}/group`, {
         name: data.name,
         location: data.location,
@@ -35,7 +35,6 @@ export default function CreateGroupPage() {
 
       if (response.status === 201) {
         const result = response.data;
-        console.log(result);
         navigate(`/group/${result.pin}`);
 
       } else {
@@ -49,10 +48,9 @@ export default function CreateGroupPage() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleStep = (step) => {
-    if (currentStep === 1 && step === -1) navigate('/main?isModalOpen=false');
+    if (currentStep === 1 && step === -1) navigate('/main');
     else if (currentStep === 4 && step === 1) {
       handleSubmit(onSubmit)();
-      console.log('submit');
 
     }
     setCurrentStep(currentStep + step);
