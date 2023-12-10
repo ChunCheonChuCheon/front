@@ -30,12 +30,11 @@ export default function Login() {
         
       } else {
         console.error('API 호출 실패');
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
 
       }
     } catch (error) {
-      console.error('API 호출 중 오류:', error);
-      alert('서버에 접속이 되지 않습니다.');
+      console.error('API 호출 중 오류:', error)
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
   };
 
