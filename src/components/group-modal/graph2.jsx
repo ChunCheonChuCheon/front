@@ -49,6 +49,7 @@ const BarChart = (props) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
+
       }}
       
       labelSkipWidth={12}

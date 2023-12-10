@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 
 export default function Location(props) {
   const [userLocation, setUserLocation] = useState(null);
-  const [loading, setLoading] = useState(true); // 추가: 로딩 상태를 관리하는 상태
+  const [loading, setLoading] = useState(true); 
 
   const mapRef = React.useRef(null);
 
@@ -25,7 +25,7 @@ export default function Location(props) {
     } catch (error) {
       console.error('Error getting geolocation:', error);
     } finally {
-      setLoading(false); // 위치 정보를 가져오든 못가져오든 로딩 상태 종료
+      setLoading(false); 
     }
   };
 
@@ -43,7 +43,6 @@ export default function Location(props) {
   };
 
   if (loading) {
-    // 로딩 중일 때 로딩 상태를 표시
     return <div>Loading...</div>;
   }
 
@@ -72,7 +71,6 @@ export default function Location(props) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* 가운데에 고정된 마커 추가 */}
         <Marker position={userLocation} />
       </MapContainer>
 

@@ -14,7 +14,6 @@ export default function Group() {
     const navigate = useNavigate();
     const location = useLocation();
     const [baseURL] = useState(useSelector((state) => state.baseURL));
-    // const [token] = useState(useSelector((state) => state.auth));
     const token = localStorage.getItem('token');
     const { pin } = useParams();
     const [userResponded, setUserResponded] = useState(false);
@@ -99,11 +98,11 @@ export default function Group() {
 
             if (response.status === 200) {
                 const result = response.data;
-                console.log("유저 응답여부: ", result);
                 if (result.result === true) {
-                    setUserResponded(true)
+                    setUserResponded((prev) => result.result === true);
                 } else {
-                    setUserResponded(false)
+                    setUserResponded((prev) => result.result === false);
+
                 }
 
 
@@ -129,11 +128,12 @@ export default function Group() {
             if (response.status === 200) {
 
                 const result = response.data;
-                setSurveyInfo({
+                setSurveyInfo((prev) => ({
+                    ...prev,
                     "top3Category": result.top3Category,
                     "groupSize": result.groupSize,
                     "noResponseNumber": result.noResponseNumber,
-                });
+                }));
 
             } else {
                 console.error('API 호출 실패');
@@ -184,7 +184,7 @@ export default function Group() {
 
                 const recommendedRestaurants = await Promise.all(recommendedRestaurantsPromises);
 
-                setRecommendedRestaurant(recommendedRestaurants);
+                setRecommendedRestaurant((prev) => recommendedRestaurants);
             } else {
                 console.error('API 호출 실패');
             }
@@ -194,7 +194,6 @@ export default function Group() {
     }
 
     const UpdateInfo = () => {
-        // console.log("UpdateInfo 실행");
         // console.log("baseURL: " + baseURL);
         // console.log("Token: " + token);
         // console.log("PIN: " + pin);
@@ -208,12 +207,13 @@ export default function Group() {
         const result = { ...location.state };
         //joinGroup을 통해 참여
         if (location.state) {
-            setGroupInfo({
+            setGroupInfo((prev) => ({
+                ...prev,
                 name: result.name,
                 location: [result.locationX, result.locationY],
                 date: formatDate(result.date),
                 range: formatRange(result.range),
-            });
+            }));
 
         }
         else {
@@ -261,9 +261,7 @@ export default function Group() {
     }, []);
 
 
-    // const menuList = recommendedMenu.map((menu) =>
-    //     <img src={menu.img} style={{ maxWidth:'80px', maxHeight:'80px', width: '15vw', height: '15vw' }} class=" m-1 rounded-xl shadow-xl border-2 border-solid border-black"></img>
-    // );
+
 
 
     const getDistance = (location) => {
