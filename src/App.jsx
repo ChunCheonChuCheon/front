@@ -9,7 +9,6 @@ import GroupPage from './pages/group';
 import MenuPage from './pages/menu';
 import { AnimatePresence } from 'framer-motion';
 import AnimationWrapper from './components/AnimationWrapper';
-import { useState } from 'react';
 
 function App() {
  

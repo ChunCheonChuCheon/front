@@ -26,8 +26,7 @@ export default function JoinGroup() {
       });
       if (response.status === 200) {
         const result = response.data;
-
-        navigate(`/group/${data.pinNumber}`, { state: result });
+        navigate(`/group/${pinNumber}`, { state: result });
       } else {
         console.error('API 호출 실패');
       }
