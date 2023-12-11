@@ -4,6 +4,8 @@ import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import arrowImage1 from '../../assets/icons/arrow-button-black.svg';
+import arrowImage2 from '../../assets/icons/arrow-button.svg';
 
 export default function Time(props) {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -38,20 +40,29 @@ export default function Time(props) {
   );
   return (
     <WhiteBox>
-      <div className='flex justify-between items-center'>
-        <button className='font-bold text-2xl mb-5' onClick={() => { props.handleStep(-1) }}>
-          ←
+      <div class='mb-3 flex justify-between items-center '>
+        <div className='flex flex-col items-center '>
+          <button  onClick={() => { props.handleStep(-1) }}>
+            <img src={arrowImage1} alt='arrow' class='w-6 h-6 ' />
+          </button>
+        </div>
+        <TextBold>
+          <div>모임 시간 정하기</div>
+        </TextBold>
+        <button   onClick={() => { 
+          const combinedDateTime = combineDateAndTime(selectedDate, selectedTime);
+          props.setValue('date', `${combinedDateTime.getFullYear()}-${(combinedDateTime.getMonth() + 1).toString().padStart(2, '0')}-${combinedDateTime.getDate().toString().padStart(2, '0')} ${combinedDateTime.getHours().toString().padStart(2, '0')}:${combinedDateTime.getMinutes().toString().padStart(2, '0')}:${combinedDateTime.getSeconds().toString().padStart(2, '0')}`);
+          console.log("시간: " + combinedDateTime);         
+          props.handleStep(1);
+        }}>
+          <img src={arrowImage2} alt='arrow' class='w-10 h-10' />
         </button>
-        <TextNormal>3/4</TextNormal>
       </div>
-      <TextBold>
-        <div className='mb-7'>모임 시간 정하기</div>
-      </TextBold>
-      <TextNormal>모임 시간을 입력해주세요</TextNormal>
+      <TextNormal>모임 시간을 입력해 주세요</TextNormal>
 
 
 
-      <label className="border border-solid border-gray-300 p-4 rounded-md mb-4">
+      <label className="border border-solid border-gray-300 p-4 rounded-md my-4">
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
@@ -76,17 +87,7 @@ export default function Time(props) {
       />
       </label>
 
-      {/* 다음 버튼 */}
-      <button
-        className='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
-        onClick={() => { 
-          const combinedDateTime = combineDateAndTime(selectedDate, selectedTime);
-          props.setValue('date', `${combinedDateTime.getFullYear()}-${(combinedDateTime.getMonth() + 1).toString().padStart(2, '0')}-${combinedDateTime.getDate().toString().padStart(2, '0')} ${combinedDateTime.getHours().toString().padStart(2, '0')}:${combinedDateTime.getMinutes().toString().padStart(2, '0')}:${combinedDateTime.getSeconds().toString().padStart(2, '0')}`);
-          console.log("시간: " + combinedDateTime);         
-          props.handleStep(1);
-        }}
-      ><TextNormal>다음</TextNormal>
-      </button>
+     
   
     </WhiteBox>
   );

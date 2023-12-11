@@ -21,7 +21,7 @@ export default function CreateGroupPage() {
   //입력한 그룹정보 처리한느 곳
   const onSubmit = async (data) => {
     try {
-      
+          console.log('creategroup요청보내기',data)
       const response = await axios.post(`${baseURL}/group`, {
         name: data.name,
         location: data.location,

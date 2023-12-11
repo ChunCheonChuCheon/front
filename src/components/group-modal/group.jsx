@@ -99,9 +99,9 @@ export default function Group() {
             if (response.status === 200) {
                 const result = response.data;
                 if (result.result === true) {
-                    setUserResponded((prev) => result.result === true);
+                    setUserResponded((prev) => true);
                 } else {
-                    setUserResponded((prev) => result.result === false);
+                    setUserResponded((prev) => false);
 
                 }
 
@@ -429,7 +429,7 @@ export default function Group() {
                 <div class=''>
                     {userResponded ? (
                         restaurantList 
-                    ) :null}
+                    ) :<p>a</p>}
 
                 </div>
             </PullToRefresh>

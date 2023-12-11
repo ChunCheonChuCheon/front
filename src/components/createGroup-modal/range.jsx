@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import WhiteBox from '../white-box';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
+import arrowImage1 from '../../assets/icons/arrow-button-black.svg';
+import arrowImage2 from '../../assets/icons/arrow-button.svg';
 
 export default function Range(props) {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -19,35 +21,46 @@ export default function Range(props) {
       case -1:
         return '춘천 전 지역을 추천합니다.';
       default:
-        return '탐색범위를 선택해주세요.';
+        return '탐색범위를 선택해 주세요.';
     }
   };
 
   return (
     <WhiteBox>
-      <div className='flex justify-between items-center'>
-        <button className='font-bold text-2xl mb-5' onClick={() => {props.handleStep(-1)}}>
-          ←
+      <div class='mb-6 flex justify-between items-center '>
+        <div className='flex flex-col items-center '>
+          <button  onClick={() => { props.handleStep(-1) }}>
+            <img src={arrowImage1} alt='arrow' class='w-6 h-6 ' />
+          </button>
+        </div>
+        <TextBold>
+        <div >탐색범위 정하기</div>
+        </TextBold>
+        <button   onClick={() =>  {
+          props.setValue('range', selectedOption)
+          props.handleStep(1)
+               }}
+        disabled={!selectedOption}>
+          <img src={arrowImage2} alt='arrow' class='w-10 h-10' />
         </button>
-        <TextNormal>4/4</TextNormal>
       </div>
       <TextBold>
-        <div className='mb-7'>탐색범위 정하기</div>
-        <div className='flex justify-between items-center'>
+        
+        <div className='flex justify-between items-center '>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === 3 ? ' bg-blue-500 text-white' : ''}`}
+            className={`justify-center items-center w-1/4 flex flex-col rounded-lg p-2 ${selectedOption === 3 ? ' bg-blue-500 text-white' : ''}`}
             onClick={() => handleOptionClick(3)}
           >
             가깝게
           </button>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === 6 ? 'bg-blue-500 text-white' : ''}`}
+            className={`justify-center items-center w-1/4 flex flex-col rounded-lg p-2 ${selectedOption === 6 ? 'bg-blue-500 text-white' : ''}`}
             onClick={() => handleOptionClick(6)}
           >
             멀게
           </button>
           <button
-            className={`flex flex-col rounded-lg p-2 ${selectedOption === -1 ? 'bg-blue-500 text-white' : ''}`}
+            className={`justify-center items-center  w-1/4 flex flex-col rounded-lg p-2 ${selectedOption === -1 ? 'bg-blue-500 text-white' : ''}`}
             onClick={() => handleOptionClick(-1)}
           >
             전체
@@ -58,17 +71,7 @@ export default function Range(props) {
       {/* 설명 */}
       <div className="mb-4"><TextNormal>{getDescription()}</TextNormal></div>
       {/* 다음 버튼 */}
-      <button
-        className='bg-[#369fff] hover:bg-[#0077e1] rounded-lg mt-5 p-2 text-white'
-        onClick={() =>  {
-          props.setValue('range', selectedOption)
-          props.handleStep(1)
-               }}
-        disabled={!selectedOption} // 선택된 옵션이 없으면 버튼 비활성화
-      >
-       <TextNormal>다음</TextNormal>
-       
-      </button>
+      
    
     </WhiteBox>
   );
