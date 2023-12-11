@@ -6,7 +6,7 @@ import TextNormal from '../text-normal';
 const MenuModal = (props) => {
 
 
-  const progress = (props.category.category) * 100 / 17
+  const progress = (props.category.category-1) * 100 / 17
 
 
 
