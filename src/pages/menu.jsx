@@ -32,7 +32,6 @@ export default function MenuPage(props) {
     const [isLastButtonClick,setIsLastButtonClick] = useState(false);
     const navigate = useNavigate();
     const baseURL = useSelector((state) => state.baseURL);
-    // const token = useSelector((state) => state.auth);
     const token = localStorage.getItem('token');
 
 
@@ -97,7 +96,7 @@ export default function MenuPage(props) {
     }, [foodCategoryList]);
 
     const handleGoodButtonClick = () => {
-        setCategoryScore(1); // 기다립니다.
+        setCategoryScore(1);
     };
 
 

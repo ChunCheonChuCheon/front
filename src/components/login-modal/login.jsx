@@ -30,12 +30,11 @@ export default function Login() {
         
       } else {
         console.error('API 호출 실패');
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
 
       }
     } catch (error) {
-      console.error('API 호출 중 오류:', error);
-      alert('서버에 접속이 되지 않습니다.');
+      console.error('API 호출 중 오류:', error)
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
   };
 
@@ -57,7 +56,6 @@ export default function Login() {
           {...register('password', {
             required: true,
             maxLength: 20,
-            pattern: /^[A-Za-z0-9]+$/i,
           })}
           class='border-b-2 border-[#369fff] focus:outline-none focus:border-[#0077e1] p-2'
           type='password'
