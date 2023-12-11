@@ -429,7 +429,7 @@ export default function Group() {
                 <div class=''>
                     {userResponded ? (
                         restaurantList 
-                    ) :<p>a</p>}
+                    ) :null}
 
                 </div>
             </PullToRefresh>
