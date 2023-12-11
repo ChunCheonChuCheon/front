@@ -7,6 +7,7 @@ import JoinGroupPage from './pages/joinGroup';
 import CreateGroupPage from './pages/createGroup';
 import GroupPage from './pages/group';
 import MenuPage from './pages/menu';
+import PolicyPage from './pages/policy';
 import { AnimatePresence } from 'framer-motion';
 import AnimationWrapper from './components/AnimationWrapper';
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/new' element={<AnimationWrapper key='new'><CreateGroupPage /></AnimationWrapper>} />
         <Route path='/group/:pin' element={<AnimationWrapper key='group'><GroupPage /></AnimationWrapper>} />
         <Route path='/menu' element={<AnimationWrapper key='menu'><MenuPage /></AnimationWrapper>} />
+        <Route path='/policy' element={<AnimationWrapper key='policy'><PolicyPage></PolicyPage></AnimationWrapper>}/>
       </Routes>
     </AnimatePresence>
 

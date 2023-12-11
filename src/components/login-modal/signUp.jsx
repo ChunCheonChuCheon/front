@@ -80,8 +80,10 @@ export default function SignUp() {
       <button
         className='ml-auto text-blue-500 hover:text-blue-700 hover:underline mt-5 p-2 '
         onClick={() => navigate('/login')}
-      >
+        
+      ><TextNormal>
         로그인
+      </TextNormal>
       </button>
     </WhiteBox>
   );
