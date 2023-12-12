@@ -3,14 +3,12 @@ import { useForm } from 'react-hook-form';
 import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuthToken } from '../../redux/actions/authActions';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ccccIcon from '../../assets/icons/ccccicon.png';
 export default function Login() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const baseURL = useSelector((state) => state.baseURL);
 
   /**

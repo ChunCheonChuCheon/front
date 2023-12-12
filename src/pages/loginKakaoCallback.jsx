@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function LoginKakaoCallbackPage() {
-  const [searchParams, _] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
   const [baseURL] = useState(useSelector((state) => state.baseURL));
   const navigate = useNavigate();
