@@ -13,26 +13,23 @@ export default function Login() {
   const dispatch = useDispatch();
   const baseURL = useSelector((state) => state.baseURL);
 
+  /**
+   *  리다이렉션을 위해 CORS 규약을 충족해야함
+   *  withCredentials: true에 대해서 찾아보기
+   */
+  const ax = axios.create({
+    baseURL: baseURL,
+  });
+
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${baseURL}/auth/login`, {
-        id: data.id,
-        password: data.password,
-      });
-
-      if (response.status === 201) {
-        const result = response.data;
-        dispatch(setAuthToken(result.access_token));
-        localStorage.setItem('token', result.access_token);
-
-        navigate('/main');
-
-      } else {
-        console.error('API 호출 실패');
-
-      }
+      const url = await ax
+        .get(`${baseURL}/auth/login/social/kakao`)
+        .then((response) => response.data.url);
+      // go to url
+      window.location.href = url;
     } catch (error) {
-      console.error('API 호출 중 오류:', error)
+      console.error('API 호출 중 오류:', error);
       alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
   };
@@ -45,13 +42,14 @@ export default function Login() {
     );
   }
 
-
   return (
     <div class='w-4/5 max-w-[400px] flex flex-col items-center'>
-      <div className="w-2/5 mb-1">
-        <img src={ccccIcon} alt='Icon' class="w-full h-full object-cover"></img>
+      <div className='w-2/5 mb-1'>
+        <img src={ccccIcon} alt='Icon' class='w-full h-full object-cover'></img>
       </div>
-      <TextNormal><div className='mb-8 text-[#369fff]'>춘천추천: 단체 식사 맛집 추천</div></TextNormal>
+      <TextNormal>
+        <div className='mb-8 text-[#369fff]'>춘천추천: 단체 식사 맛집 추천</div>
+      </TextNormal>
 
       <LoginWhiteBox>
         <TextBold>
@@ -86,18 +84,16 @@ export default function Login() {
         <button
           class='ml-auto text-blue-500 hover:text-blue-700 hover:underline  mt-5 '
           onClick={() => navigate('/signup')}
-
-        ><TextNormal>회원가입</TextNormal>
+        >
+          <TextNormal>회원가입</TextNormal>
         </button>
       </LoginWhiteBox>
       <button
         className='ml-auto  hover:underline mt-2 p-2 '
-        onClick={() => navigate('/policy')}  // 원하는 경로로 수정
-      ><TextNormal>
-          이용 약관 및 오픈소스 이용 안내
-        </TextNormal>
+        onClick={() => navigate('/policy')} // 원하는 경로로 수정
+      >
+        <TextNormal>이용 약관 및 오픈소스 이용 안내</TextNormal>
       </button>
     </div>
-
   );
 }

@@ -5,9 +5,8 @@ import DefaultLayout from '../layouts/default';
 
 export default function LoginPage() {
   return (
-<DefaultLayout>
+    <DefaultLayout>
       <Login />
     </DefaultLayout>
-    
   );
 }
