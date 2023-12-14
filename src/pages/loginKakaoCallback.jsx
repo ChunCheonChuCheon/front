@@ -22,10 +22,13 @@ export default function LoginKakaoCallbackPage() {
       localStorage.setItem('token', token);
 
       const storedRedirectPath = localStorage.getItem('redirectPath');
+      console.log('로그인콜백페이지: 스테이트redeirectPath',redirectPath);
+      console.log('로그인콜백페이지: 로컬스토리지에서 받아온거',storedRedirectPath);
+
       if (storedRedirectPath) {
-        setRedirectPath(storedRedirectPath);
+        setRedirectPath(storedRedirectPath).then(console.log('스테이트변경후: ',redirectPath));
       }
-      navigate(redirectPath);
+      navigate(localStorage.getItem('redirectPath'));
     })();
   }, [baseURL, code, navigate,redirectPath]);
   
