@@ -26,7 +26,7 @@ export default function LoginKakaoCallbackPage() {
       console.log('로그인콜백페이지: 로컬스토리지에서 받아온거',storedRedirectPath);
 
       if (storedRedirectPath) {
-        setRedirectPath(storedRedirectPath).then(console.log('스테이트변경후: ',redirectPath));
+        setRedirectPath(storedRedirectPath)
       }
       navigate(localStorage.getItem('redirectPath'));
     })();
