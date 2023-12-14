@@ -11,7 +11,7 @@ export default function MenuPage(props) {
 
     const [foodCategoryList, setFoodCategoryList] = useState([
         { category: 1, name: '족발/보쌈', img: 'https://mblogthumb-phinf.pstatic.net/MjAyMTAzMDlfMTY2/MDAxNjE1Mjc4ODM1MzE2.gU2G4VuMz1R3l1LeaPLp1FOyv1qaxWajcIDLQk-ssIkg.64DsxNh_iLVPx9Qxu9MmQ8QmAycAiy04usisytJ9gDkg.JPEG.kgir4mucs/1.jpg?type=w800', score: null },
-        { category: 2, name: '돈까스', img: 'https://i.namu.wiki/i/NriT1zAMhpoUtH06vL6Hr4wbes3SrIMhg_Nx8Vug-fAmbPi92x_aAwPmcfFJNlbFeRYXkziNQl1bvRXozEXxTdLm_1D_cy9z1mICZwhf8vkPhnGjkoLVNu3YFUNmAd-1v1oWVLVre-y12AvVwEJmeg.webp', score: null },
+        { category: 2, name: '돈까스', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160602_298%2Fjjun2311_1464835442266VzKe9_JPEG%2FIMG_0900.jpg&type=sc960_832', score: null },
         { category: 3, name: '회', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTdfMjE4%2FMDAxNzAwMTc4OTE3OTgz.7C9A6mfAfLZMp5BTYAtBQfRAS8vPCP-aOgnwemyJWaAg.00diQdOFsEt0Nedf7kHvvF3vIjmyEzmka2o46eratzEg.JPEG.710naju%2F1699963078760.jpg&type=sc960_832', score: null },
         { category: 4, name: '일식', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTNfMTIz%2FMDAxNjk5ODUxMzI2MzE1.50_W5dN-woaTQi_BUzi13oqgy-fs1W4m8EW3h2yB1oUg.tkQkl2O6VfUN1ur6IzV060pcueKWKF_-n8T-JeLfHLEg.JPEG.zoaworns12%2FIMG_4250.jpg&type=sc960_832', score: null },
         { category: 5, name: '고기/구이', img: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzExMTVfMjk3%2FMDAxNzAwMDM2NTYzMjk5.mUuhjFG9GksnfrgLs0QQWRucvGSRVn9TPDqOHzEV1qsg.aZa6SK153r-cmF3_2g9bxB627BTD2uIxqsgHVNX4Oq8g.JPEG.kittyprety%2F20231113%25A3%25DF200745.jpg&type=sc960_832', score: null },

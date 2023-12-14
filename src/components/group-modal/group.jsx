@@ -229,16 +229,15 @@ export default function Group() {
             console.error('API 호출 실패');
           }
         } catch (error) {
-          //핀번호가 틀렷을시에
-      console.error('API 호출 중 오류(joinGroup: (getGroupInfo)):', error);
-      alert('핀번호가 존재하지 않습니다.');
-
-      //여기서 핀번호를 먼저 거르고 토큰을 걸러서 만약 둘다 이상할경우에 핀번호 오류를 먼저 띄우자
-      //그러면 토큰이 이상할경우에 핀번호는 맞을테니 핀번호 페이지로 이동해서 거기서 검사없이 바로
-      //핀번호로 그룹정보 가져오는 콜에 오류 안걸릴듯
-
-      //토큰이 이상한 경우에
-       navigate('/login', { state: { from:`/group/${pin}`} });
+          console.log('에러진입')
+          if(error.response.data.message==='해당하는 PIN의 그룹을 찾을 수 없습니다.'){
+            alert('해당하는 PIN의 그룹을 찾을 수 없습니다.')
+          }
+          else if(error.response.data.message==='Invalid token')
+          {
+            navigate('/login', { state: { from:`/group/${pin}`} });
+            
+          }
         }
       }
       _getGroupInfo();
@@ -316,13 +315,25 @@ export default function Group() {
   ));
 
   const handleCopyClick = () => {
-    const tempInput = document.createElement('input');
-    tempInput.value = pin;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    alert('핀 번호가 복사되었습니다.');
+    navigator.clipboard.writeText(pin)
+      .then(() => {
+        alert('핀 번호가 복사되었습니다.');
+      })
+      .catch((err) => {
+        console.error('복사 중 오류 발생:', err);
+        alert('복사에 실패했습니다.');
+      });
+  };
+
+  const handleCopyClick2 = () => {
+    navigator.clipboard.writeText(`${baseURL}/group/${pin}`)
+      .then(() => {
+        alert('주소가 복사되었습니다.');
+      })
+      .catch((err) => {
+        console.error('복사 중 오류 발생:', err);
+        alert('복사에 실패했습니다.');
+      });
   };
 
   const handleRefresh = async () => {
@@ -351,7 +362,16 @@ export default function Group() {
                 className='text-blue-500 hover:text-blue-700 transition-colors duration-300'
                 onClick={handleCopyClick}
               />
-
+              <u
+                  className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300'
+                  onClick={handleCopyClick2}
+                >
+                  <TextNormal>주소 복사</TextNormal>
+                </u>
+                <FaRegCopy
+                className='text-blue-500 hover:text-blue-700 transition-colors duration-300'
+                onClick={handleCopyClick2}
+              />
               <div className='flex'></div>
             </div>
           </div>

@@ -32,16 +32,25 @@ export default function JoinGroup() {
         console.error('API 호출 실패');
       }
     } catch (error) { //각 케이스별로 테스트 해봐야함
+      if(error.response.data.message==='해당하는 PIN의 그룹을 찾을 수 없습니다.'){
+        alert('해당하는 PIN의 그룹을 찾을 수 없습니다.')
+      }
+      else if(error.response.data.message==='Invalid token')
+      {
+        navigate('/login', { state: { from:`/group/${pinNumber}`} });
+        
+      }
       //핀번호가 틀렷을시에
       console.error('API 호출 중 오류(joinGroup: Onsubmit):', error);
-      alert('핀번호가 존재하지 않습니다.');
+      console.log('error.response: ',error.response.data);
+      console.log('error.respnse.message: ',error.response.data.message);
+
 
       //여기서 핀번호를 먼저 거르고 토큰을 걸러서 만약 둘다 이상할경우에 핀번호 오류를 먼저 띄우자
       //그러면 토큰이 이상할경우에 핀번호는 맞을테니 핀번호 페이지로 이동해서 거기서 검사없이 바로
       //핀번호로 그룹정보 가져오는 콜에 오류 안걸릴듯
 
       //토큰이 이상한 경우에
-      navigate('/login', { state: { from:`/group/${pinNumber}`} });
     }
   }
 

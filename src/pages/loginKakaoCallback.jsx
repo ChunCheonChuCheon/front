@@ -10,7 +10,6 @@ export default function LoginKakaoCallbackPage() {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
   const [baseURL] = useState(useSelector((state) => state.baseURL));
-  const [redirectPath,setRedirectPath] = useState('/main')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,15 +21,19 @@ export default function LoginKakaoCallbackPage() {
       localStorage.setItem('token', token);
 
       const storedRedirectPath = localStorage.getItem('redirectPath');
-      console.log('로그인콜백페이지: 스테이트redeirectPath',redirectPath);
-      console.log('로그인콜백페이지: 로컬스토리지에서 받아온거',storedRedirectPath);
+      
 
       if (storedRedirectPath) {
-        setRedirectPath(storedRedirectPath)
+        navigate(storedRedirectPath);
       }
-      navigate(localStorage.getItem('redirectPath'));
+      else
+      {
+        navigate('/main');
+      }
+      localStorage.removeItem('redirectPath');
+      console.log('로컬스토리지에서 패쓰삭제');
     })();
-  }, [baseURL, code, navigate,redirectPath]);
+  }, [baseURL, code, navigate]);
   
   
   return <DefaultLayout>
