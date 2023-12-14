@@ -16,8 +16,9 @@ export default function JoinGroup() {
   const token = localStorage.getItem('token');
 
   async function onSubmit(data) {
+    const pinNumber = Object.values(data).join('');
     try {
-      const pinNumber = Object.values(data).join('');
+      
 
       const response = await axios.get(`${baseURL}/group?pin=${pinNumber}`, {
         headers: {
@@ -30,9 +31,17 @@ export default function JoinGroup() {
       } else {
         console.error('API 호출 실패');
       }
-    } catch (error) {
+    } catch (error) { //각 케이스별로 테스트 해봐야함
+      //핀번호가 틀렷을시에
       console.error('API 호출 중 오류(joinGroup: Onsubmit):', error);
       alert('핀번호가 존재하지 않습니다.');
+
+      //여기서 핀번호를 먼저 거르고 토큰을 걸러서 만약 둘다 이상할경우에 핀번호 오류를 먼저 띄우자
+      //그러면 토큰이 이상할경우에 핀번호는 맞을테니 핀번호 페이지로 이동해서 거기서 검사없이 바로
+      //핀번호로 그룹정보 가져오는 콜에 오류 안걸릴듯
+
+      //토큰이 이상한 경우에
+      navigate('/login', { state: { from:`/group/${pinNumber}`} });
     }
   }
 
@@ -50,6 +59,33 @@ export default function JoinGroup() {
     }
     setFocus(`pinNumber${index + 1}`);
   };
+
+  const handleCreateButton =async ()=>{
+      try {
+        
+        const response = await axios.get(`${baseURL}/auth`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.status === 200) {
+          navigate('/new');
+
+        } else {
+          console.error('API 호출 실패');
+        }
+      } catch (error) { 
+        console.error('API 호출 중 오류(joinGroupPage-그룹생성버튼클릭후 토큰인증):', error);
+  
+  
+        //토큰이 이상한 경우에
+         navigate('/login', { state: { from:`/new`} });
+      }
+
+    }
+  
+  
+
 
   return (
     <div class='w-4/5 max-w-[400px]'>
@@ -86,7 +122,8 @@ export default function JoinGroup() {
         <button
           class='bg-gradient-to-b from-[#369fff] to-[#318fe6] hover:bg-[#0077e1] rounded-lg  p-3 text-white font-normal'
           onClick={() => {
-            navigate('/new');
+            handleCreateButton();
+            
           }}
         >
           <TextBold>새로운 그룹 만들기</TextBold>

@@ -4,31 +4,34 @@ import TextBold from '../text-bold';
 import TextNormal from '../text-normal';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ccccIcon from '../../assets/icons/ccccicon.png';
+import { useState } from 'react';
+
 export default function Login() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const baseURL = useSelector((state) => state.baseURL);
-
-  /**
-   *  리다이렉션을 위해 CORS 규약을 충족해야함
-   *  withCredentials: true에 대해서 찾아보기
-   */
+  const location = useLocation();
+  const [redirectPath] = useState(location.state?.from || '/main');
   const ax = axios.create({
     baseURL: baseURL,
   });
 
   const onSubmit = async (data) => {
     try {
+      console.log(baseURL)
       const url = await ax
         .get(`${baseURL}/auth/login/social/kakao`)
         .then((response) => response.data.url);
       // go to url
+      
+      localStorage.setItem('redirectPath',redirectPath);
+      console.log("redirectPath: ",redirectPath)
       window.location.href = url;
     } catch (error) {
       console.error('API 호출 중 오류:', error);
-      alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      // alert('아이디 또는 비밀번호가 일치하지 않습니다.');
     }
   };
 
