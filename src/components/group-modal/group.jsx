@@ -315,13 +315,25 @@ export default function Group() {
   ));
 
   const handleCopyClick = () => {
-    const tempInput = document.createElement('input');
-    tempInput.value = pin;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    alert('핀 번호가 복사되었습니다.');
+    navigator.clipboard.writeText(pin)
+      .then(() => {
+        alert('핀 번호가 복사되었습니다.');
+      })
+      .catch((err) => {
+        console.error('복사 중 오류 발생:', err);
+        alert('복사에 실패했습니다.');
+      });
+  };
+
+  const handleCopyClick2 = () => {
+    navigator.clipboard.writeText(`${baseURL}/group/${pin}`)
+      .then(() => {
+        alert('주소가 복사되었습니다.');
+      })
+      .catch((err) => {
+        console.error('복사 중 오류 발생:', err);
+        alert('복사에 실패했습니다.');
+      });
   };
 
   const handleRefresh = async () => {
@@ -350,7 +362,16 @@ export default function Group() {
                 className='text-blue-500 hover:text-blue-700 transition-colors duration-300'
                 onClick={handleCopyClick}
               />
-
+              <u
+                  className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300'
+                  onClick={handleCopyClick2}
+                >
+                  <TextNormal>주소 복사</TextNormal>
+                </u>
+                <FaRegCopy
+                className='text-blue-500 hover:text-blue-700 transition-colors duration-300'
+                onClick={handleCopyClick2}
+              />
               <div className='flex'></div>
             </div>
           </div>
