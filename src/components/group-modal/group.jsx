@@ -326,7 +326,7 @@ export default function Group() {
   };
 
   const handleCopyClick2 = () => {
-    navigator.clipboard.writeText(`${baseURL}/group/${pin}`)
+    navigator.clipboard.writeText(`https://chucheon.com/group/${pin}`)
       .then(() => {
         alert('주소가 복사되었습니다.');
       })
