@@ -26,7 +26,7 @@ export default function TeamModal() {
   
       <div className='py-2'>
       <h2 clas>Contribute at</h2>
-      <a className='pl-2 hover:underline text-blue-500 hover:text-blue-700 transition-colors duration-300'href="https://github.com/YourGitHubUsername/ChunCheonChuCheon">ChunCheonChuCheon</a>
+      <a className='pl-2 hover:underline text-blue-500 hover:text-blue-700 transition-colors duration-300'href="https://github.com/ChunCheonChuCheon">ChunCheonChuCheon</a>
       </div>
       
       <div className='py-2'>
