@@ -230,13 +230,12 @@ export default function Group() {
           }
         } catch (error) {
           console.log('에러진입')
-          if(error.response.data.message==='해당하는 PIN의 그룹을 찾을 수 없습니다.'){
+          if (error.response.data.message === '해당하는 PIN의 그룹을 찾을 수 없습니다.') {
             alert('해당하는 PIN의 그룹을 찾을 수 없습니다.')
           }
-          else if(error.response.data.message==='Invalid token')
-          {
-            navigate('/login', { state: { from:`/group/${pin}`} });
-            
+          else if (error.response.data.message === 'Invalid token') {
+            navigate('/login', { state: { from: `/group/${pin}` } });
+
           }
         }
       }
@@ -349,7 +348,6 @@ export default function Group() {
               <div className='my-3 pr-5'>{groupInfo.name}</div>
             </TextBold>
             <div className='flex justify-center items-center'>
-              <TextNormal>PIN:</TextNormal>
               <TextNormal>
                 <u
                   className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300'
@@ -363,12 +361,12 @@ export default function Group() {
                 onClick={handleCopyClick}
               />
               <u
-                  className='cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300'
-                  onClick={handleCopyClick2}
-                >
-                  <TextNormal>주소 복사</TextNormal>
-                </u>
-                <FaRegCopy
+                className='ml-2 cursor-pointer text-blue-500 hover:text-blue-700 transition-colors duration-300'
+                onClick={handleCopyClick2}
+              >
+                <TextNormal>주소 복사</TextNormal>
+              </u>
+              <FaRegCopy
                 className='text-blue-500 hover:text-blue-700 transition-colors duration-300'
                 onClick={handleCopyClick2}
               />

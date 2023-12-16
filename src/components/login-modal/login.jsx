@@ -68,12 +68,21 @@ export default function Login() {
 
 
       </LoginWhiteBox>
+      <div className='flex justify-between w-full '>
       <button
-        className='ml-auto  hover:underline mt-2 p-2 '
-        onClick={() => navigate('/policy')} // 원하는 경로로 수정
+        className=' hover:underline mt-2 ml-2 p-2'
+        onClick={() => navigate('/team')} 
+      >
+        <TextNormal>팀 소개</TextNormal>
+      </button>
+      <button
+        className='  hover:underline mt-2  mr-2 p-2'
+        onClick={() => navigate('/policy')} 
       >
         <TextNormal>이용 약관 및 오픈소스 이용 안내</TextNormal>
       </button>
+      </div>
+      
     </div>
   );
 }
