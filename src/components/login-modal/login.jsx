@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ccccIcon from '../../assets/icons/ccccicon.png';
 import { useState } from 'react';
-import kakaoIcon from '../../assets/icons/kakao_login_medium_narrow.png'
+import kakaoIcon from '../../assets/icons/kakao_login_large_wide.png'
 
 export default function Login() {
   const navigate = useNavigate();
